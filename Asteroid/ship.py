@@ -1,4 +1,5 @@
 from pygame import Vector2
+from pygame.draw import polygon
 
 import core
 
@@ -12,7 +13,8 @@ class Ship:
         self.AccMax = 10
         self.NbrVie = 3
         self.Mass = 1
-        self.Taille = 5
+        self.Taille = 50
+        self.orientation = Vector2(0, -1)
 
     #def deplacement(self):  # création des méthodes
         #if core.getKeyPressList("d"):
@@ -26,8 +28,18 @@ class Ship:
         #self.position = self.position + self.vitesse
 
     def deplacement(self):
-        #if core.getkeyPressList("z"):
-        pass
+        if core.getkeyPressList("z"):
+            print("haut")
+
+    def up(self):
+        self.Acc = Vector2(self.orientation)
+        self.Vitesse += self.Acc
+        #self.Pos += self.Vitesse
+        self.Pos += self.orientation
+
+
+    def rotation(self):
+        self.orientation = self.orientation.rotate(2)
 
 
     def collision(self):
@@ -35,6 +47,17 @@ class Ship:
 
 
     def show(self):
-        core.Draw.circle((255,255,255),self.Pos,self.Taille)
 
+        p1 = self.orientation.rotate(90)
+        p1.scale_to_length(20)
+        p1 = p1 + self.Pos
 
+        p3 = self.orientation.rotate(-90)
+        p3.scale_to_length(20)
+        p3 = p3 + self.Pos
+
+        p2 = Vector2(self.orientation)
+        p2.scale_to_length(40)
+        p2 = p2 + self.Pos
+
+        core.Draw.polygon((255,255,255),((p1),(p2),(p3)),1)

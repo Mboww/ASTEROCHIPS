@@ -7,7 +7,7 @@ import core
 from Asteroid import ship
 from Asteroid.etat import Etat
 from Asteroid.ship import Ship
-from Asteroid.son import Son
+#from Asteroid.son import Son
 
 
 def setup():
@@ -18,16 +18,22 @@ def setup():
     core.memory("etat", Etat.DEMARRAGE)
     Format = 0
     core.memory(("Vaisseau"),Ship())
-    Son = True
 
-
+    core.memory("SonOn", core.Texture("./SoundOn.png", Vector2(1210, (core.WINDOW_SIZE[1] / 2) + 290), 0, [50, 50]))
+    core.memory("SonOff", core.Texture("./SoundOff.png", Vector2(1210, (core.WINDOW_SIZE[1] / 2) + 290), 0, [50, 50]))
 
 def afficherDemarrage():
+    Son = False
+
+
+
     Format = 1
-    print("run")
 
 
-    if core.getKeyPressList("") and Format!=0:
+
+
+
+    if core.getKeyPressList("r") and Format!=0:
         Format = 0
 
 
@@ -161,32 +167,43 @@ def afficherDemarrage():
 
 
 
-
-
-
-
-
-
     # -------------SonOn/Off-------------------------------------------
 
-    if Son == True:
 
+#if Son == True:
+
+    core.Draw.rect((255, 255, 255), (1210, (core.WINDOW_SIZE[1] / 2) + 290, 50, 50), 5)
+    Pos_SourisSon = pygame.mouse.get_pos()
+    recSon = Rect((1210, (core.WINDOW_SIZE[1] / 2) + 290, 50, 50))
+
+
+
+    if recSon.collidepoint(Pos_SourisSon):
+
+        if core.getMouseLeftClick():
+            Pos_SourisSon = core.getMouseLeftClick()
+
+            if recSon.collidepoint(Pos_SourisSon):
+               Son = True
+
+
+    core.cleanScreen()
+    if Son:
 
         if not core.memory("SonOn").ready:
             core.memory("SonOn").load()
-    core.memory("SonOn", core.Texture("./SoundOn.png", Vector2(1210, (core.WINDOW_SIZE[1] / 2) + 290), 0, [50, 50]))
-    core.memory("SonOn").show()
 
+        core.memory("SonOn").show()
+
+
+    if not Son:
+
+        if not core.memory("SonOff").ready:
+            core.memory("SonOff").load()
+
+        core.memory("SonOff").show()
 
     #----------------------------------------------------------------------
-
-
-
-
-
-
-
-
 
 
 
@@ -201,6 +218,16 @@ def afficherDemarrage():
 
 
 def afficherJeu():
+
+    if core.getKeyPressList("ESCAPE"):
+        core.memory("etat", Etat.DEMARRAGE)
+
+    if core.getKeyPressList("z"):
+        core.memory("Vaisseau").up()
+
+    if core.getKeyPressList("d"):
+        core.memory("Vaisseau").rotation()
+
     core.memory('Vaisseau').show()
 
 
