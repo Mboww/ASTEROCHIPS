@@ -54,9 +54,9 @@ class Ship:
         #core.Draw.polygon((255,255,255),((p1),(p2),(p3)),1) #création d'un triangle
         vaisseau = core.Draw.polygon((255,255,255),((p1),(p2),(p3)),1)
 
-        if self.Pos.x<0:
+        if self.Pos.x<0: #sortie gauche
             self.Pos.x= core.WINDOW_SIZE[0]
-        if self.Pos.x>core.WINDOW_SIZE[0]:
+        if self.Pos.x>core.WINDOW_SIZE[0]:#sortie droite
             self.Pos.x= 0
 
         if self.Pos.y < 0:
