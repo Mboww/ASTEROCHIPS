@@ -28,17 +28,10 @@ def setup():
 
     core.memory("SonOn", core.Texture("./Asset/SoundOn.png", Vector2(1210, (core.WINDOW_SIZE[1] / 2) + 290), 0, [50, 50]))
     core.memory("SonOff", core.Texture("./Asset/SoundOff.png", Vector2(1210, (core.WINDOW_SIZE[1] / 2) + 290), 0, [50, 50]))
-    core.memory("Regles",core.Texture("./Asset/Regles.png", Vector2(0, 0), 0, [1280, 720]))
+    core.memory("Son", 1)
+    core.memory("Regles",core.Texture("./Asset/Regles.png", Vector2(-60, 0), 0, [1400, 787]))
     core.memory("ReglesOK",1)
 def afficherDemarrage():
-
-    # -------------Regles-------------------------------------------
-
-
-
-
-
-
 
 
 
@@ -56,7 +49,7 @@ def afficherDemarrage():
     Pos_SourisPlay = pygame.mouse.get_pos()
     recPlay = Rect((core.WINDOW_SIZE[0] / 2) - 100, (core.WINDOW_SIZE[1] / 2) - 62, 198, 70)
 
-    if recPlay.collidepoint(Pos_SourisPlay):
+    if recPlay.collidepoint(Pos_SourisPlay) and core.memory("ReglesOK") == 0:
         core.Draw.text((255, 255, 0), "PLAY", ((core.WINDOW_SIZE[0] / 2) - 95, (core.WINDOW_SIZE[1] / 2) - 60), 105, '')
 
         if core.getMouseLeftClick():
@@ -75,7 +68,7 @@ def afficherDemarrage():
     Pos_SourisExit = pygame.mouse.get_pos()
     recExit = Rect((core.WINDOW_SIZE[0] / 2) - 75, (core.WINDOW_SIZE[1] / 2) + 85, 135, 55)
 
-    if recExit.collidepoint(Pos_SourisExit):
+    if recExit.collidepoint(Pos_SourisExit) and core.memory("ReglesOK") == 0:
         core.Draw.text((255, 255, 0), "EXIT", ((core.WINDOW_SIZE[0] / 2) - 68, (core.WINDOW_SIZE[1] / 2) + 90), 70, '')
 
         if core.getMouseLeftClick():
@@ -94,7 +87,7 @@ def afficherDemarrage():
     Pos_SourisCredit = pygame.mouse.get_pos()
     recCredit = Rect(18, (core.WINDOW_SIZE[1] / 2) + 318, 88, 28)
 
-    if recCredit.collidepoint(Pos_SourisCredit):
+    if recCredit.collidepoint(Pos_SourisCredit) and core.memory("ReglesOK") == 0:
         core.Draw.text((255, 255, 0), "Credit", (20, (core.WINDOW_SIZE[1] / 2) + 320), 40, '')
 
         if core.getMouseLeftClick():
@@ -107,34 +100,43 @@ def afficherDemarrage():
 
     # -------------SON------------------------------------------------
     # if Son == True:
-    Son = True
 
-    core.Draw.rect((255, 255, 255), (1210, (core.WINDOW_SIZE[1] / 2) + 290, 50, 50), 5)
+    #core.Draw.rect((255, 255, 255), (1210, (core.WINDOW_SIZE[1] / 2) + 290, 50, 50), 5)
     Pos_SourisSon = pygame.mouse.get_pos()
     recSon = Rect((1210, (core.WINDOW_SIZE[1] / 2) + 290, 50, 50))
+
+    if not core.memory("SonOn").ready:
+        core.memory("SonOn").load()
+    if not core.memory("SonOff").ready:
+        core.memory("SonOff").load()
 
     if recSon.collidepoint(Pos_SourisSon):
 
         if core.getMouseLeftClick():
             Pos_SourisSon = core.getMouseLeftClick()
+            time.sleep(0.5)
 
             if recSon.collidepoint(Pos_SourisSon):
-                Son = True
+                if core.memory("Son") == 0:
+                    core.memory("Son", 1)
+                elif core.memory("Son") == 1:
+                    core.memory("Son", 0)
 
-    core.cleanScreen()
-    if Son:
+    if core.memory("Son") == 0:
+        core.memory("SonOff").load()
+        core.memory("SonOff").show()
 
-        if not core.memory("SonOn").ready:
-            core.memory("SonOn").load()
 
+
+    if core.memory("Son") == 1:
+        core.memory("SonOn").load()
         core.memory("SonOn").show()
 
-    if not Son:
 
-        if not core.memory("SonOff").ready:
-            core.memory("SonOff").load()
 
-        core.memory("SonOff").show()
+    core.cleanScreen()
+
+
 
     # ----------------------------------------------------------------------
 
@@ -149,6 +151,10 @@ def afficherDemarrage():
 
         core.memory("Regles").show()
         core.cleanScreen()
+
+        if core.memory("ReglesOK") == 0:
+            time.sleep(0.4)
+
 
 def afficherJeu():
 
