@@ -5,7 +5,9 @@ from pygame import Vector2
 from pygame.rect import Rect
 import core
 from Asteroid import ship
+from Asteroid.asteroide import Asteroide
 from Asteroid.etat import Etat
+from Asteroid.map import Map
 from Asteroid.ship import Ship
 #from Asteroid.son import Son
 
@@ -18,6 +20,8 @@ def setup():
     core.memory("etat", Etat.DEMARRAGE)
     Format = 0
     core.memory(("Vaisseau"),Ship())
+    core.memory(("Asteroide"), Asteroide())
+    core.memory(("Map"), Map())
 
     core.memory("SonOn", core.Texture("./SoundOn.png", Vector2(1210, (core.WINDOW_SIZE[1] / 2) + 290), 0, [50, 50]))
     core.memory("SonOff", core.Texture("./SoundOff.png", Vector2(1210, (core.WINDOW_SIZE[1] / 2) + 290), 0, [50, 50]))
@@ -222,13 +226,15 @@ def afficherJeu():
     if core.getKeyPressList("ESCAPE"):
         core.memory("etat", Etat.DEMARRAGE)
 
-    if core.getKeyPressList("z"):
-        core.memory("Vaisseau").up()
+    #if core.getKeyPressList("z"):
+        #core.memory("Vaisseau").up()
 
-    if core.getKeyPressList("d"):
-        core.memory("Vaisseau").rotation()
-
+    #if core.getKeyPressList("d"):
+        #core.memory("Vaisseau").rotation()
+    core.memory('Vaisseau').deplacement()
     core.memory('Vaisseau').show()
+
+    core.memory('Map').spawnAst()
 
 
 
@@ -242,9 +248,6 @@ def afficherMenu():
 
 def afficherCredit():
     pass
-
-
-
 
 
 def run():

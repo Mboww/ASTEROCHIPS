@@ -28,19 +28,17 @@ class Ship:
         #self.position = self.position + self.vitesse
 
     def deplacement(self):
-        if core.getkeyPressList("z"):
-            print("haut")
 
-    def up(self):
-        self.Acc = Vector2(self.orientation)
-        self.Vitesse += self.Acc
-        #self.Pos += self.Vitesse
-        self.Pos += self.orientation
+        if core.getKeyPressList("z"):  # déplacement vers le haut
+            self.Acc = Vector2(self.orientation)
+            self.Vitesse += self.Acc
+            self.Pos += self.orientation
 
+        if core.getKeyPressList("d"): #rotation sens horaire
+            self.orientation = self.orientation.rotate(2)
 
-    def rotation(self):
-        self.orientation = self.orientation.rotate(2)
-
+        if core.getKeyPressList("q"): #rotation sens non-horaire
+            self.orientation = self.orientation.rotate(-2)
 
     def collision(self):
         pass
@@ -48,16 +46,16 @@ class Ship:
 
     def show(self):
 
-        p1 = self.orientation.rotate(90)
+        p1 = self.orientation.rotate(90) #Point1 du triangle
         p1.scale_to_length(20)
         p1 = p1 + self.Pos
 
-        p3 = self.orientation.rotate(-90)
+        p3 = self.orientation.rotate(-90) #Point3 du triangle
         p3.scale_to_length(20)
         p3 = p3 + self.Pos
 
-        p2 = Vector2(self.orientation)
+        p2 = Vector2(self.orientation) #Point2 du triangle
         p2.scale_to_length(40)
         p2 = p2 + self.Pos
 
-        core.Draw.polygon((255,255,255),((p1),(p2),(p3)),1)
+        core.Draw.polygon((255,255,255),((p1),(p2),(p3)),1) #création d'un triangle
