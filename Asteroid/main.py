@@ -22,6 +22,7 @@ def setup():
     core.memory(("Vaisseau"),Ship())
     core.memory(("Asteroide"), Asteroide())
     core.memory(("Map"), Map())
+    core.memory("mesProjectiles", [])
 
     core.memory("SonOn", core.Texture("./SoundOn.png", Vector2(1210, (core.WINDOW_SIZE[1] / 2) + 290), 0, [50, 50]))
     core.memory("SonOff", core.Texture("./SoundOff.png", Vector2(1210, (core.WINDOW_SIZE[1] / 2) + 290), 0, [50, 50]))

@@ -8,6 +8,7 @@ class Ship:
     def __init__(self):
         self.Pos = Vector2((core.WINDOW_SIZE[0]/2),(core.WINDOW_SIZE[1]/2))
         self.Vitesse = Vector2(0, 0)
+        self.Vitesse0 = Vector2(0, 0)
         self.Acc = Vector2(0, 0)
         self.VitesseMax = 10
         self.AccMax = 10
@@ -25,10 +26,17 @@ class Ship:
             self.Pos += self.orientation
 
         if core.getKeyPressList("d"): #rotation sens horaire
-            self.orientation = self.orientation.rotate(2)
+            self.orientation = self.orientation.rotate(3)
 
         if core.getKeyPressList("q"): #rotation sens non-horaire
-            self.orientation = self.orientation.rotate(-2)
+            self.orientation = self.orientation.rotate(-3)
+
+        self.Pos += self.Acc
+        self.Acc = self.Acc*0.995
+
+        if self.Acc.length() < 0.5:
+            self.Acc = Vector2(0, 0)
+
 
     def collision(self):
         pass
