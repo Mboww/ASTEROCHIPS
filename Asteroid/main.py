@@ -123,13 +123,6 @@ def afficherDemarrage():
     # ----------------------------------------------------------------------
 
 
-# if core.getMouseLeftClick():
-#     position = core.getMouseLeftClick()
-#     rec = Rect(380, 280, 90, 40)
-#
-#     if rec.collidepoint(position):
-#         core.memory("etat", Etat.JEU)
-
 
 def afficherJeu():
 

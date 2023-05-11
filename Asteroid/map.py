@@ -21,7 +21,5 @@ class Map:
         #RecTeleportation = Rect((0,0,255),(0, 0,10,720))
 
 
-
-
     def spawnEnemy(self):
         pass
