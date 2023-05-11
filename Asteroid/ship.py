@@ -16,17 +16,6 @@ class Ship:
         self.Taille = 50
         self.orientation = Vector2(0, -1)
 
-    #def deplacement(self):  # création des méthodes
-        #if core.getKeyPressList("d"):
-           # k = 0.01
-           # u = 1
-            #l = (self.Pos - 4)
-            #l0 = 0.001
-            #Fa = (k * u * (l - l0))
-            #self.acc = Fa
-        #self.vitesse = self.vitesse + self.acc
-        #self.position = self.position + self.vitesse
-
     def deplacement(self):
 
         if core.getKeyPressList("z"):  # déplacement vers le haut

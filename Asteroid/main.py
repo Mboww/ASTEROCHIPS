@@ -29,13 +29,7 @@ def setup():
 def afficherDemarrage():
     Son = False
 
-
-
     Format = 1
-
-
-
-
 
     if core.getKeyPressList("r") and Format!=0:
         Format = 0
