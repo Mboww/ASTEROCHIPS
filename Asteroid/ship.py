@@ -16,6 +16,7 @@ class Ship:
         self.Taille = 50
         self.orientation = Vector2(0, -1)
 
+
     def deplacement(self):
 
         if core.getKeyPressList("z"):  # déplacement vers le haut
@@ -30,6 +31,9 @@ class Ship:
             self.orientation = self.orientation.rotate(-2)
 
     def collision(self):
+        pass
+
+    def sortie(self):
         pass
 
 
@@ -47,4 +51,15 @@ class Ship:
         p2.scale_to_length(40)
         p2 = p2 + self.Pos
 
-        core.Draw.polygon((255,255,255),((p1),(p2),(p3)),1) #création d'un triangle
+        #core.Draw.polygon((255,255,255),((p1),(p2),(p3)),1) #création d'un triangle
+        vaisseau = core.Draw.polygon((255,255,255),((p1),(p2),(p3)),1)
+
+        if self.Pos.x<0:
+            self.Pos.x= core.WINDOW_SIZE[0]
+        if self.Pos.x>core.WINDOW_SIZE[0]:
+            self.Pos.x= 0
+
+        if self.Pos.y < 0:
+            self.Pos.y = core.WINDOW_SIZE[1]
+        if self.Pos.y > core.WINDOW_SIZE[1]:
+            self.Pos.y = 0
