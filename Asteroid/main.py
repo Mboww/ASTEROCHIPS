@@ -24,7 +24,7 @@ def setup():
 
 def afficherDemarrage():
     Format = 1
-
+    print("run")
 
 
     if core.getKeyPressList("") and Format!=0:
