@@ -1,4 +1,5 @@
 import time
+from random import random
 
 import pygame
 from pygame import Vector2
@@ -8,6 +9,7 @@ from Asteroid import ship
 from Asteroid.asteroide import Asteroide
 from Asteroid.etat import Etat
 from Asteroid.map import Map
+from Asteroid.projectil import Projectile
 from Asteroid.ship import Ship
 #from Asteroid.son import Son
 
@@ -24,14 +26,27 @@ def setup():
     core.memory(("Map"), Map())
     core.memory("mesProjectiles", [])
 
-    core.memory("SonOn", core.Texture("./SoundOn.png", Vector2(1210, (core.WINDOW_SIZE[1] / 2) + 290), 0, [50, 50]))
-    core.memory("SonOff", core.Texture("./SoundOff.png", Vector2(1210, (core.WINDOW_SIZE[1] / 2) + 290), 0, [50, 50]))
-
+    core.memory("SonOn", core.Texture("./Asset/SoundOn.png", Vector2(1210, (core.WINDOW_SIZE[1] / 2) + 290), 0, [50, 50]))
+    core.memory("SonOff", core.Texture("./Asset/SoundOff.png", Vector2(1210, (core.WINDOW_SIZE[1] / 2) + 290), 0, [50, 50]))
+    core.memory("Regles",core.Texture("./Asset/Regles.png", Vector2(0, 0), 0, [1280, 720]))
+    core.memory("ReglesOK",1)
 def afficherDemarrage():
+
+    # -------------Regles-------------------------------------------
+
+
+
+
+
+
+
+
+
     # -------------Texte ASTEROID-------------------------------------------
     core.Draw.text((255, 255, 255), "ASTEROID", ((core.WINDOW_SIZE[0] / 2 - 280), (core.WINDOW_SIZE[1] / 2) - 250), 100,
                    'Doctor Glitch')  # Arial #((core.WINDOW_SIZE[0] / 2 - 200), (core.WINDOW_SIZE[1] / 2) - 250), 100)
     # ----------------------------------------------------------------------
+
 
     # -------------Texte PLAY/EXIT/CREDIT-------------------------------------------
     # core.Draw.rect((255, 255, 255), ((core.WINDOW_SIZE[0] / 2) - 100, (core.WINDOW_SIZE[1] / 2) - 62, 198, 70), 5)
@@ -124,6 +139,16 @@ def afficherDemarrage():
     # ----------------------------------------------------------------------
 
 
+    if core.memory("ReglesOK") == 1:
+
+        if core.getMouseLeftClick() or core.getMouseRightClick():
+            core.memory("ReglesOK",0)
+
+        if not core.memory("Regles").ready:
+            core.memory("Regles").load()
+
+        core.memory("Regles").show()
+        core.cleanScreen()
 
 def afficherJeu():
 
@@ -132,21 +157,39 @@ def afficherJeu():
 
     core.memory('Vaisseau').deplacement()
     core.memory('Vaisseau').show()
-
     core.memory('Map').spawnAst()
+
+    if core.getKeyPressList("SPACE"):
+        print("yes")
 
 
 
 def afficherGameOver():
     core.Draw.text((255, 255, 255), "GAMEOVER", (365, 280), 30)
+    if core.getKeyPressList("ESCAPE"):
+        core.memory("etat", Etat.DEMARRAGE)
 
 
 def afficherMenu():
+    #if core.getKeyPressList("ESCAPE"):
+    #    core.memory("etat", Etat.DEMARRAGE)
     pass
 
 
 def afficherCredit():
-    pass
+
+    if core.getKeyPressList("ESCAPE"):
+        core.memory("etat", Etat.DEMARRAGE)
+
+
+
+
+
+
+
+
+
+
 
 
 def run():
@@ -162,6 +205,9 @@ def run():
 
     if core.memory('etat') == Etat.MENU:
         afficherMenu()
+
+    if core.memory('etat') == Etat.CREDIT:
+        afficherCredit()
 
 
 core.main(setup, run)

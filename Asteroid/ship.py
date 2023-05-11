@@ -71,3 +71,5 @@ class Ship:
             self.Pos.y = core.WINDOW_SIZE[1]
         if self.Pos.y > core.WINDOW_SIZE[1]:
             self.Pos.y = 0
+
+

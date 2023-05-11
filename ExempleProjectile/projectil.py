@@ -1,4 +1,5 @@
 import time
+from random import random
 
 from pygame import Vector2
 
@@ -23,3 +24,9 @@ class Projectile:
 
     def draw(self):
         core.Draw.circle((255,255,255),self.position,self.taille)
+
+    def creationProjectile(position):
+        proj = Projectile()
+        proj.position = Vector2(position)
+        proj.acceleration = Vector2(random.uniform(-1, 1), random.uniform(-1, 1))
+        core.memory('mesProjectiles').append(proj)
