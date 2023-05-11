@@ -35,10 +35,6 @@ def afficherDemarrage():
         Format = 0
 
 
-
-
-
-
     if Format == 1:
 
         #-------------Texte ASTEROID-------------------------------------------
@@ -205,26 +201,12 @@ def afficherDemarrage():
 
 
 
-   #if core.getMouseLeftClick():
-   #     position = core.getMouseLeftClick()
-   #     rec = Rect(380, 280, 90, 40)
-   #
-   #     if rec.collidepoint(position):
-   #         core.memory("etat", Etat.JEU)
-
-
-
 
 def afficherJeu():
 
     if core.getKeyPressList("ESCAPE"):
         core.memory("etat", Etat.DEMARRAGE)
 
-    #if core.getKeyPressList("z"):
-        #core.memory("Vaisseau").up()
-
-    #if core.getKeyPressList("d"):
-        #core.memory("Vaisseau").rotation()
     core.memory('Vaisseau').deplacement()
     core.memory('Vaisseau').show()
 

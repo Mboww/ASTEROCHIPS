@@ -13,10 +13,11 @@ class Map:
 
     def spawnAst(self):
 
-        core.Draw.rect((0,0,255),(core.WINDOW_SIZE[0]/2, core.WINDOW_SIZE[1] - 100))
-        #if recExit.collidepoint(Pos_SourisExit):
-        #core.Draw.text((255, 255, 0), "EXIT", ((core.WINDOW_SIZE[0] / 2) - 68, (core.WINDOW_SIZE[1] / 2) + 90), 70,'')
-        pass
+        core.Draw.rect((0,0,255),(0, 0,10,720))
+        core.Draw.rect((0, 0, 255), (0, 0, 1280, 10))
+        core.Draw.rect((0, 0, 255), (1270, 0, 10, 720))
+        core.Draw.rect((0, 0, 255), (0, 710, 1280, 10))
+        if
 
     def spawnEnemy(self):
         pass
