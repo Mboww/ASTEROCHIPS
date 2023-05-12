@@ -294,9 +294,14 @@ def afficherGameOver():
 
 
 def afficherMenu():
-    # if core.getKeyPressList("ESCAPE"):
-    #    core.memory("etat", Etat.DEMARRAGE)
-    print("page menu")
+    if core.getKeyPressList("ESCAPE"):
+        core.memory("etat", Etat.JEU)
+
+    core.Draw.text((255, 255, 255), "JEU EN PAUSE", (420, core.WINDOW_SIZE[1]/2-200), 80, 'Arial')
+    core.Draw.text((255, 255, 255), "SCORE:", (420, core.WINDOW_SIZE[1]/2-200), 35, 'Arial')
+    core.Draw.text((255, 255, 255), str(core.memory("total")), (420, core.WINDOW_SIZE[1]/2-200), 35, 'Arial')
+    core.cleanScreen()
+
 
 
 def afficherCredit():
