@@ -26,7 +26,7 @@ def setup():
 
     Format = 0
     v=Ship()
-    core.memory(("Vaisseau"), Ship("j"))
+    core.memory(("Vaisseau"), v)
 
     core.memory(("Asteroide"), Asteroide())
     core.memory(("Map"), Map())

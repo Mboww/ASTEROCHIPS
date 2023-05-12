@@ -49,8 +49,5 @@ class Asteroide:
         return False
 
     def destruction(self):
-        #dist = self.position.distance_to(v.position)
-        #if dist < self.taille:
-            #return True
-        #return False
+
         pass
