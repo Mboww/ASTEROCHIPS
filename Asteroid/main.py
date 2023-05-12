@@ -37,10 +37,11 @@ def setup():
     core.memory("Regles", core.Texture("./Asset/Regles.png", Vector2(-60, 0), 0, [1400, 787]))
     core.memory("ReglesOK", 0)
     core.memory("Info", core.Texture("./Asset/Info.png", Vector2(1210, 20), 0, [60, 60]))
-
+    core.memory("Vie3", core.Texture("./Asset/Vie.png", Vector2(1100, 10),0,[60, 60]))
+    core.memory("Vie2", core.Texture("./Asset/Vie.png", Vector2(1155, 10), 0, [60, 60]))
+    core.memory("Vie1", core.Texture("./Asset/Vie.png", Vector2(1210, 10), 0, [60, 60]))
     core.memory("mesProjectiles", [])
     core.memory("mesAsteroides", [])
-
     for i in range(0, 4):
         position_x = random.randint(0, core.WINDOW_SIZE[0])
         position_y = random.randint(-10, 10)
@@ -223,7 +224,45 @@ def afficherJeu():
         a.teleportation()
 
 
+    if not core.memory("Vie3").ready:
+        core.memory("Vie3").load()
 
+    if not core.memory("Vie2").ready:
+        core.memory("Vie2").load()
+
+    if not core.memory("Vie1").ready:
+        core.memory("Vie1").load()
+
+
+    if core.memory("VieV") == 3 :
+        core.memory("Vie3").load()
+        core.memory("Vie3").show()
+        core.memory("Vie2").load()
+        core.memory("Vie2").show()
+        core.memory("Vie1").load()
+        core.memory("Vie1").show()
+
+    if core.memory("VieV") == 2 :
+        core.memory("Vie2").load()
+        core.memory("Vie2").show()
+        core.memory("Vie1").load()
+        core.memory("Vie1").show()
+
+    if core.memory("VieV") == 1 :
+        core.memory("Vie1").load()
+        core.memory("Vie1").show()
+
+    core.cleanScreen()
+
+    if core.getKeyPressList("1"):
+        core.memory("VieV", 1)
+        print("1")
+    if core.getKeyPressList("2"):
+        core.memory("VieV", 2)
+        print("2")
+    if core.getKeyPressList("3"):
+        core.memory("VieV", 3)
+        print("3")
 
 
 def afficherGameOver():

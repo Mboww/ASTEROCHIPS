@@ -17,6 +17,7 @@ class Ship:
         self.Mass = 1
         self.Taille = 50
         self.orientation = Vector2(0, -1)
+        core.memory("VieV", 3)
 
 
     def deplacement(self):
@@ -74,4 +75,7 @@ class Ship:
         if self.Pos.y > core.WINDOW_SIZE[1]:
             self.Pos.y = 0
 
+
+    def VieVaisseau(self):
+        core.memory("VieV", self.NbrVie)
 
