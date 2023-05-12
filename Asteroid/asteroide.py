@@ -6,13 +6,14 @@ import core
 
 
 class Asteroide:
-    def __init__(self,x=0,y=0):  # à mettre à chaque fois pour définir les objets
+    def __init__(self,x=0,y=0,):  # à mettre à chaque fois pour définir les objets
         self.taille = 30
         self.vitesse = Vector2()
         self.acc = Vector2()
         self.Vmax = 2
         self.Accmax = 2
         self.position = Vector2(x,y)
+
 
     def deplacement(self):
         if self.acc.length() > self.Accmax:
@@ -47,3 +48,9 @@ class Asteroide:
             return True
         return False
 
+    def destruction(self):
+        #dist = self.position.distance_to(v.position)
+        #if dist < self.taille:
+            #return True
+        #return False
+        pass

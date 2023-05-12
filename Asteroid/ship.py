@@ -7,7 +7,7 @@ import core
 
 
 class Ship:
-    def __init__(self):
+    def __init__(self,j="joueur"):
         self.Pos = Vector2((core.WINDOW_SIZE[0]/2),(core.WINDOW_SIZE[1]/2))
         self.Vitesse = Vector2(0, 0)
         self.Acc = Vector2(0, 0)
@@ -15,7 +15,7 @@ class Ship:
         self.AccMax = 10
         self.NbrVie = 3
         self.Mass = 1
-
+        self.name = j
         self.orientation = Vector2(0, -1)
 
 

@@ -25,7 +25,9 @@ def setup():
     core.memory("etat", Etat(0))
 
     Format = 0
-    core.memory(("Vaisseau"), Ship())
+    v=Ship()
+    core.memory(("Vaisseau"), Ship("j"))
+
     core.memory(("Asteroide"), Asteroide())
     core.memory(("Map"), Map())
 
@@ -42,6 +44,7 @@ def setup():
     core.memory("Vie1", core.Texture("./Asset/Vie.png", Vector2(1210, 10), 0, [60, 60]))
     core.memory("mesProjectiles", [])
     core.memory("mesAsteroides", [])
+    core.memory('monVaisseau',[v])
 
     core.memory('VieV',3)
 
@@ -206,7 +209,6 @@ def afficherJeu():
     core.memory('Vaisseau').teleportation()
 
     if core.getKeyPressList("SPACE"):
-        print("yes")
         if len(core.memory('mesProjectiles')) > 0:
             if time.time() - core.memory('mesProjectiles')[-1].startTime > 0.2:
                 creationProjectile()
@@ -237,7 +239,6 @@ def afficherJeu():
 
                 core.memory('mesProjectiles').remove(p)
                 core.memory('mesAsteroides').remove(a)
-
 
 
 
