@@ -217,11 +217,14 @@ def afficherJeu():
         p.draw()
 
 
-
     for a in core.memory('mesAsteroides'):
         a.show()
         a.deplacement()
         a.teleportation()
+
+
+
+
 
 def afficherGameOver():
     core.Draw.text((255, 255, 255), "GAMEOVER", (365, 280), 30)
