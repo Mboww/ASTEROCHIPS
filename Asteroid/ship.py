@@ -43,9 +43,6 @@ class Ship:
     def collision(self):
         pass
 
-    def sortie(self):
-        pass
-
 
     def show(self):
 

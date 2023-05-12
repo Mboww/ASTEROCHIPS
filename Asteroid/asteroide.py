@@ -26,6 +26,9 @@ class Asteroide:
 
     def show(self):
         core.Draw.circle((255,255,255),self.position,self.taille,5)
+        #core.Draw.rect((100,0,120),(self.position.x-15, self.position.y-15,30,30))
+
+
 
     def teleportation(self):
         if self.position.x < 0: #sortie gauche
@@ -37,3 +40,9 @@ class Asteroide:
             self.position.y = core.WINDOW_SIZE[1]
         if self.position.y > core.WINDOW_SIZE[1]:
             self.position.y = 0
+
+    def collision(self,projectile):
+        dist = self.position.distance_to(projectile.position)
+        if dist < self.taille:
+            return True
+        return False

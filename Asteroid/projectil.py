@@ -22,10 +22,7 @@ class Projectile:
         self.vitesse += self.acceleration
         self.position += self.vitesse
 
-        pass
-
     def collision(self):
-
         pass
 
     def draw(self):

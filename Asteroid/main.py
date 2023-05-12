@@ -42,10 +42,11 @@ def setup():
     core.memory("Vie1", core.Texture("./Asset/Vie.png", Vector2(1210, 10), 0, [60, 60]))
     core.memory("mesProjectiles", [])
     core.memory("mesAsteroides", [])
+
     for i in range(0, 4):
         position_x = random.randint(0, core.WINDOW_SIZE[0])
         position_y = random.randint(-10, 10)
-        creationAsteroide(position_x, position_y)
+        creationAsteroide(position_x, position_y,100)
 
 
 def creationProjectile():
@@ -55,10 +56,11 @@ def creationProjectile():
     core.memory('mesProjectiles').append(proj)
 
 
-def creationAsteroide(position_x, position_y):
+def creationAsteroide(position_x, position_y,taille):
     ast = Asteroide()
     ast.position = Vector2(position_x, position_y)
     ast.acc = Vector2((random.uniform(-1, 1)), random.uniform(-1, 1))
+    ast.taille = taille
     core.memory('mesAsteroides').append(ast)
 
 
@@ -222,6 +224,20 @@ def afficherJeu():
         a.show()
         a.deplacement()
         a.teleportation()
+
+    for a in core.memory('mesAsteroides'):
+        for p in core.memory('mesProjectiles'):
+            result = a.collision(p)
+            if result:
+                if a.taille > 20:
+                    creationAsteroide(p.position.x,p.position.y,a.taille/2)
+                    creationAsteroide(p.position.x, p.position.y, a.taille / 2)
+
+                core.memory('mesProjectiles').remove(p)
+                core.memory('mesAsteroides').remove(a)
+
+
+
 
 
     if not core.memory("Vie3").ready:
