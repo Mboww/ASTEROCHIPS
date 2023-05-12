@@ -208,6 +208,7 @@ def afficherJeu():
     core.memory('Vaisseau').show()
     core.memory('Vaisseau').teleportation()
 
+#lancer projectiles
     if core.getKeyPressList("SPACE"):
         if len(core.memory('mesProjectiles')) > 0:
             if time.time() - core.memory('mesProjectiles')[-1].startTime > 0.2:
@@ -223,12 +224,13 @@ def afficherJeu():
         p.deplacement()
         p.draw()
 
-
+# spawn asteroide
     for a in core.memory('mesAsteroides'):
         a.show()
         a.deplacement()
         a.teleportation()
 
+#collision asteroide + calcul score
     Tt=(core.memory('total'))
     for a in core.memory('mesAsteroides'):
         for p in core.memory('mesProjectiles'):
@@ -244,8 +246,27 @@ def afficherJeu():
                 core.memory('mesAsteroides').remove(a)
                 core.memory('total',Tt)
 
-    #for a in core.memory('mesAsteroides'):
-        #for v
+
+#collision vaisseau
+    for a in core.memory('mesAsteroides'):
+        result = a.destruction(core.memory("Vaisseau"))
+        if result:
+            core.memory("Vaisseau").NbrVie -= 1
+            core.memory("Vaisseau").Pos = Vector2((core.WINDOW_SIZE[0]/2),(core.WINDOW_SIZE[1]/2))
+        if core.memory("Vaisseau").NbrVie == 0:
+            core.memory("etat", Etat.GAMEOVER)
+
+            #Nbrdevie = core.memory("VieV")
+            #Nbrdevie -= Nbrdevie
+
+    if len(core.memory('mesAsteroides')) == 0:
+        for i in range(0, 3):
+            position_x = random.randint(0, core.WINDOW_SIZE[0])
+            position_y = random.randint(-10, 10)
+            creationAsteroide(position_x, position_y, 60)
+
+
+
 
 #-------------------Gestion des Vies---------
 
@@ -289,6 +310,8 @@ def afficherJeu():
 
 def afficherGameOver():
     core.Draw.text((255, 255, 255), "GAMEOVER", (365, 280), 30)
+    core.Draw.text((255, 255, 255), "SCORE:", (15, 15), 35, 'Arial')
+    core.Draw.text((255, 255, 255), str(core.memory("total")), (142, 15), 35, 'Arial')
     if core.getKeyPressList("ESCAPE"):
         core.memory("etat", Etat.DEMARRAGE)
 

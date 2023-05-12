@@ -42,15 +42,14 @@ class Asteroide:
         if self.position.y > core.WINDOW_SIZE[1]:
             self.position.y = 0
 
-    def collision(self,projectile):
+    def collision(self, projectile):
         dist = self.position.distance_to(projectile.position)
         if dist < self.taille:
             return True
         return False
 
-    def destruction(self,vaisseau):
-        #dist = self.position.distance_to(vaisseau.position)
-        #if dist < self.taille:
-            #return True
-        #return False
-        pass
+    def destruction(self, vaisseau):
+        dist = self.position.distance_to(vaisseau.Pos)
+        if dist < self.taille:
+            return True
+        return False

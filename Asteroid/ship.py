@@ -16,6 +16,7 @@ class Ship:
         self.NbrVie = 3
         self.Mass = 1
         self.orientation = Vector2(0, -1)
+        self.name = "monvaisseau"
 
 
     def deplacement(self):
