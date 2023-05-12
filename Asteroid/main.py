@@ -1,5 +1,5 @@
-import random
 import time
+from random import random
 
 import pygame
 from pygame import Vector2
@@ -31,6 +31,7 @@ def setup():
     core.memory("Son", 1)
     core.memory("Regles",core.Texture("./Asset/Regles.png", Vector2(-60, 0), 0, [1400, 787]))
     core.memory("ReglesOK",0)
+    core.memory("Info", core.Texture("./Asset/Info.png", Vector2(1210, 20), 0, [60, 60]))
 
     core.memory("mesProjectiles", [])
 
@@ -163,6 +164,24 @@ def afficherDemarrage():
 
         if core.memory("ReglesOK") == 0:
             time.sleep(0.4)
+
+    if not core.memory("Info").ready:
+        core.memory("Info").load()
+    core.memory("Info").show()
+
+    #core.Draw.rect((255, 255, 255), (1220, 18, 40, 65), 5)
+    Pos_SourisInfo = pygame.mouse.get_pos()
+    recInfo = Rect(1220, 18, 40, 65)
+
+
+    if core.getMouseLeftClick():
+        Pos_SourisInfo = core.getMouseLeftClick()
+
+        if recInfo.collidepoint(Pos_SourisInfo):
+            core.memory("ReglesOK", 1)
+
+
+
 
 
 def afficherJeu():
