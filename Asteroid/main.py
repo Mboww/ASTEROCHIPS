@@ -43,10 +43,12 @@ def setup():
     core.memory("mesProjectiles", [])
     core.memory("mesAsteroides", [])
 
-    for i in range(0, 4):
+    core.memory('VieV',3)
+
+    for i in range(0, 3):
         position_x = random.randint(0, core.WINDOW_SIZE[0])
         position_y = random.randint(-10, 10)
-        creationAsteroide(position_x, position_y,100)
+        creationAsteroide(position_x, position_y,60)
 
 
 def creationProjectile():
@@ -229,9 +231,9 @@ def afficherJeu():
         for p in core.memory('mesProjectiles'):
             result = a.collision(p)
             if result:
-                if a.taille > 20:
+                if a.taille > 15:
                     creationAsteroide(p.position.x,p.position.y,a.taille/2)
-                    creationAsteroide(p.position.x, p.position.y, a.taille / 2)
+                    creationAsteroide(p.position.x, p.position.y, a.taille/2)
 
                 core.memory('mesProjectiles').remove(p)
                 core.memory('mesAsteroides').remove(a)

@@ -22,8 +22,6 @@ class Projectile:
         self.vitesse += self.acceleration
         self.position += self.vitesse
 
-    def collision(self):
-        pass
 
     def draw(self):
         core.Draw.circle((255,255,255), self.position, self.taille)

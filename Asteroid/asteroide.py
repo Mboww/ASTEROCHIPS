@@ -46,3 +46,4 @@ class Asteroide:
         if dist < self.taille:
             return True
         return False
+

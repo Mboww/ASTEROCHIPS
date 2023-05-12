@@ -15,9 +15,8 @@ class Ship:
         self.AccMax = 10
         self.NbrVie = 3
         self.Mass = 1
-        self.Taille = 50
+
         self.orientation = Vector2(0, -1)
-        core.memory("VieV", 3)
 
 
     def deplacement(self):
@@ -30,6 +29,7 @@ class Ship:
         if core.getKeyPressList("d"): #rotation sens horaire
             self.orientation = self.orientation.rotate(3)
 
+
         if core.getKeyPressList("q"): #rotation sens non-horaire
             self.orientation = self.orientation.rotate(-3)
 
@@ -38,10 +38,6 @@ class Ship:
 
         if self.Acc.length() < 0.25:
             self.Acc = Vector2(0, 0)
-
-
-    def collision(self):
-        pass
 
 
     def show(self):
@@ -58,8 +54,14 @@ class Ship:
         p2.scale_to_length(40)
         p2 = p2 + self.Pos
 
-        #core.Draw.polygon((255,255,255),((p1),(p2),(p3)),1) #création d'un triangle
-        vaisseau = core.Draw.polygon((255,255,255),((p1),(p2),(p3)),1)
+        #création d'un triangle
+        hauteur = Vector2(self.orientation)
+        hauteur.scale_to_length(40/3)
+        hauteur = hauteur + self.Pos
+        core.Draw.circle((0, 0, 255), hauteur, 18, 1)
+        core.Draw.polygon((255,255,255),((p1),(p2),(p3)),1)
+
+
 
     def teleportation(self):
         if self.Pos.x < 0: #sortie gauche
@@ -71,8 +73,3 @@ class Ship:
             self.Pos.y = core.WINDOW_SIZE[1]
         if self.Pos.y > core.WINDOW_SIZE[1]:
             self.Pos.y = 0
-
-
-    def VieVaisseau(self):
-        core.memory("VieV", self.NbrVie)
-
