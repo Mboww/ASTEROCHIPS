@@ -198,7 +198,7 @@ def afficherDemarrage():
 
 
 def afficherJeu():
-    if core.getKeyPressList("ESCAPE") or core.getKeyPressList("p"):
+    if core.getKeyPressList("p"):
         core.memory("etat", Etat.MENU)
 
     #affichage zone
@@ -321,8 +321,24 @@ def afficherMenu():
         core.memory("etat", Etat.JEU)
 
     core.Draw.text((255, 255, 255), "JEU EN PAUSE", (420, core.WINDOW_SIZE[1]/2-200), 80, 'Arial')
-    core.Draw.text((255, 255, 255), "SCORE:", (420, core.WINDOW_SIZE[1]/2-200), 35, 'Arial')
-    core.Draw.text((255, 255, 255), str(core.memory("total")), (420, core.WINDOW_SIZE[1]/2-200), 35, 'Arial')
+    core.Draw.text((255, 255, 255), "SCORE :", (535, core.WINDOW_SIZE[1]/2-100), 50, 'Arial')
+    core.Draw.text((255, 255, 255), str(core.memory("total")), (715, core.WINDOW_SIZE[1]/2-100), 50, 'Arial')
+    core.Draw.rect((255, 255, 255), ((core.WINDOW_SIZE[0] / 2) - 153, (core.WINDOW_SIZE[1] / 2) - 45, 305, 55), 5)
+    core.Draw.text((255, 255, 255), "CONTINUER", ((core.WINDOW_SIZE[0] / 2) - 150, (core.WINDOW_SIZE[1] / 2) - 40), 70,'')  # Arial #((core.WINDOW_SIZE[0] / 2) - 105, (core.WINDOW_SIZE[1] / 2) - 60), 105)
+
+    Pos_SourisPlay = pygame.mouse.get_pos()
+    recPlay = Rect((core.WINDOW_SIZE[0] / 2) - 153, (core.WINDOW_SIZE[1] / 2) - 45, 305, 55)
+
+    if recPlay.collidepoint(Pos_SourisPlay):
+        core.Draw.text((255, 255, 0), "CONTINUER", ((core.WINDOW_SIZE[0] / 2) - 150, (core.WINDOW_SIZE[1] / 2) - 40), 70,'')  # Arial #((core.WINDOW_SIZE[0] / 2) - 105, (core.WINDOW_SIZE[1] / 2) - 60), 105)
+
+        if core.getMouseLeftClick():
+            Pos_SourisPlay = core.getMouseLeftClick()
+
+            if recPlay.collidepoint(Pos_SourisPlay):
+                core.memory("etat", Etat.JEU)
+
+
     core.cleanScreen()
 
 
