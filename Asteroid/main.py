@@ -44,9 +44,9 @@ def setup():
     core.memory("Vie1", core.Texture("./Asset/Vie.png", Vector2(1210, 10), 0, [60, 60]))
     core.memory("mesProjectiles", [])
     core.memory("mesAsteroides", [])
-    core.memory('monVaisseau',[v])
-
+    #core.memory('monVaisseau',[v])
     core.memory('VieV',3)
+    core.memory('total',0)
 
     for i in range(0, 3):
         position_x = random.randint(0, core.WINDOW_SIZE[0])
@@ -229,6 +229,7 @@ def afficherJeu():
         a.deplacement()
         a.teleportation()
 
+    Tt=(core.memory('total'))
     for a in core.memory('mesAsteroides'):
         for p in core.memory('mesProjectiles'):
             result = a.collision(p)
@@ -236,12 +237,17 @@ def afficherJeu():
                 if a.taille > 15:
                     creationAsteroide(p.position.x,p.position.y,a.taille/2)
                     creationAsteroide(p.position.x, p.position.y, a.taille/2)
-
+                    Tt += 20
+                else :
+                    Tt += 50
                 core.memory('mesProjectiles').remove(p)
                 core.memory('mesAsteroides').remove(a)
+                core.memory('total',Tt)
 
+    #for a in core.memory('mesAsteroides'):
+        #for v
 
-
+#-------------------Gestion des Vies---------
 
     if not core.memory("Vie3").ready:
         core.memory("Vie3").load()
@@ -254,34 +260,31 @@ def afficherJeu():
 
 
     if core.memory("VieV") == 3 :
-        core.memory("Vie3").load()
         core.memory("Vie3").show()
-        core.memory("Vie2").load()
         core.memory("Vie2").show()
-        core.memory("Vie1").load()
         core.memory("Vie1").show()
 
     if core.memory("VieV") == 2 :
-        core.memory("Vie2").load()
         core.memory("Vie2").show()
-        core.memory("Vie1").load()
         core.memory("Vie1").show()
 
     if core.memory("VieV") == 1 :
-        core.memory("Vie1").load()
         core.memory("Vie1").show()
 
     core.cleanScreen()
 
     if core.getKeyPressList("1"):
         core.memory("VieV", 1)
-        print("1")
+
     if core.getKeyPressList("2"):
         core.memory("VieV", 2)
-        print("2")
+
     if core.getKeyPressList("3"):
         core.memory("VieV", 3)
-        print("3")
+
+    #------SCORE-----
+    core.Draw.text((255,255,255),"SCORE:",(15,15),35,'Arial')
+    core.Draw.text((255,255,255),str(core.memory("total")),(142,15),35,'Arial')
 
 
 def afficherGameOver():

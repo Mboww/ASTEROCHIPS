@@ -48,6 +48,9 @@ class Asteroide:
             return True
         return False
 
-    def destruction(self):
-
+    def destruction(self,vaisseau):
+        #dist = self.position.distance_to(vaisseau.position)
+        #if dist < self.taille:
+            #return True
+        #return False
         pass
