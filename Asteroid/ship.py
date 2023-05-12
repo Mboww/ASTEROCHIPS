@@ -8,7 +8,6 @@ class Ship:
     def __init__(self):
         self.Pos = Vector2((core.WINDOW_SIZE[0]/2),(core.WINDOW_SIZE[1]/2))
         self.Vitesse = Vector2(0, 0)
-        self.Vitesse0 = Vector2(0, 0)
         self.Acc = Vector2(0, 0)
         self.VitesseMax = 10
         self.AccMax = 10
@@ -34,7 +33,7 @@ class Ship:
         self.Pos += self.Acc
         self.Acc = self.Acc*0.995
 
-        if self.Acc.length() < 0.5:
+        if self.Acc.length() < 0.25:
             self.Acc = Vector2(0, 0)
 
 
@@ -62,10 +61,10 @@ class Ship:
         #core.Draw.polygon((255,255,255),((p1),(p2),(p3)),1) #création d'un triangle
         vaisseau = core.Draw.polygon((255,255,255),((p1),(p2),(p3)),1)
 
-        if self.Pos.x<0: #sortie gauche
-            self.Pos.x= core.WINDOW_SIZE[0]
-        if self.Pos.x>core.WINDOW_SIZE[0]:#sortie droite
-            self.Pos.x= 0
+        if self.Pos.x < 0: #sortie gauche
+            self.Pos.x = core.WINDOW_SIZE[0]
+        if self.Pos.x > core.WINDOW_SIZE[0]: #sortie droite
+            self.Pos.x = 0
 
         if self.Pos.y < 0:
             self.Pos.y = core.WINDOW_SIZE[1]

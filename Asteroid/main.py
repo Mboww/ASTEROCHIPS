@@ -1,5 +1,5 @@
+import random
 import time
-from random import random
 
 import pygame
 from pygame import Vector2
@@ -24,16 +24,25 @@ def setup():
     core.memory(("Vaisseau"),Ship())
     core.memory(("Asteroide"), Asteroide())
     core.memory(("Map"), Map())
-    core.memory("mesProjectiles", [])
+
 
     core.memory("SonOn", core.Texture("./Asset/SoundOn.png", Vector2(1210, (core.WINDOW_SIZE[1] / 2) + 290), 0, [50, 50]))
     core.memory("SonOff", core.Texture("./Asset/SoundOff.png", Vector2(1210, (core.WINDOW_SIZE[1] / 2) + 290), 0, [50, 50]))
     core.memory("Son", 1)
     core.memory("Regles",core.Texture("./Asset/Regles.png", Vector2(-60, 0), 0, [1400, 787]))
-    core.memory("ReglesOK",1)
+    core.memory("ReglesOK",0)
+
+    core.memory("mesProjectiles", [])
+
+def creationProjectile():
+    proj = Projectile()
+    proj.position = Vector2(core.memory('Vaisseau').Pos) + 35*core.memory('Vaisseau').orientation
+    proj.acceleration = Vector2(core.memory('Vaisseau').orientation)
+    #proj.acceleration = Vector2(0,-1)
+    core.memory('mesProjectiles').append(proj)
+
+
 def afficherDemarrage():
-
-
 
     # -------------Texte ASTEROID-------------------------------------------
     core.Draw.text((255, 255, 255), "ASTEROID", ((core.WINDOW_SIZE[0] / 2 - 280), (core.WINDOW_SIZE[1] / 2) - 250), 100,
@@ -167,7 +176,21 @@ def afficherJeu():
 
     if core.getKeyPressList("SPACE"):
         print("yes")
+        if len(core.memory('mesProjectiles'))>0:
+            if time.time() - core.memory('mesProjectiles')[-1].startTime >0.2:
+                creationProjectile()
 
+        else:
+            creationProjectile()
+
+
+    for p in core.memory('mesProjectiles'):
+        if time.time() - p.startTime > p.dureedevie :
+            core.memory('mesProjectiles').remove(p)
+
+    for p in core.memory('mesProjectiles'):
+        p.deplacement()
+        p.draw()
 
 
 def afficherGameOver():

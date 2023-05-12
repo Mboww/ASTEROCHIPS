@@ -19,5 +19,6 @@ class Partie:
         for i in range(0, self.map.maxPlayer):
             self.map.addJoueur(Player())  # crée un joueur par défaut
 
+
     def show(self):
         self.map.show()  # utilise la méthode show dans la classe map
