@@ -20,7 +20,6 @@ class Projectile:
     def deplacement(self):
 
         self.vitesse += self.acceleration
-        #self.position = Vector2(self.ship.Pos)
         self.position += self.vitesse
 
         pass
