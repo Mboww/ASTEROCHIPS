@@ -42,6 +42,7 @@ def setup():
     core.memory("Vie3", core.Texture("./Asset/Vie.png", Vector2(1100, 10),0,[60, 60]))
     core.memory("Vie2", core.Texture("./Asset/Vie.png", Vector2(1155, 10), 0, [60, 60]))
     core.memory("Vie1", core.Texture("./Asset/Vie.png", Vector2(1210, 10), 0, [60, 60]))
+    core.memory("Credit", core.Texture("./Asset/Credit.png", Vector2(0, 0), 0, [1280, 720]))
     core.memory("mesProjectiles", [])
     core.memory("mesAsteroides", [])
     #core.memory('monVaisseau',[v])
@@ -157,11 +158,9 @@ def afficherDemarrage():
                     core.memory("Son", 0)
 
     if core.memory("Son") == 0:
-        core.memory("SonOff").load()
         core.memory("SonOff").show()
 
     if core.memory("Son") == 1:
-        core.memory("SonOn").load()
         core.memory("SonOn").show()
 
     core.cleanScreen()
@@ -346,7 +345,15 @@ def afficherMenu():
 def afficherCredit():
     if core.getKeyPressList("ESCAPE"):
         core.memory("etat", Etat.DEMARRAGE)
-    print("page crédit")
+
+
+    if not core.memory("Credit").ready:
+        core.memory("Credit").load()
+    core.memory("Credit").show()
+    core.cleanScreen()
+
+    core.Draw.text((255, 255, 255), "Meilleur Score : 7000", ((core.WINDOW_SIZE[0] / 2)-510, (core.WINDOW_SIZE[1] / 2)+135), 40,'Cooper Black')
+    core.Draw.text((255, 255, 255), "Meilleur Score : 7000",((core.WINDOW_SIZE[0] / 2) +90, (core.WINDOW_SIZE[1] / 2) + 135), 40, 'Cooper Black')
 
 
 def run():
