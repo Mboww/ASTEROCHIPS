@@ -391,3 +391,5 @@ class Texture:
                 core.screen.blit(rotated_image, new_rect)
 
 
+def ecran():
+    return None

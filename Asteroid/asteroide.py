@@ -1,6 +1,7 @@
 import random
 
-from pygame import Vector2
+import pygame
+from pygame import Vector2, image
 
 import core
 
@@ -13,8 +14,6 @@ class Asteroide:
         self.Vmax = 2
         self.Accmax = 2
         self.position = Vector2(x,y)
-
-
     def deplacement(self):
         if self.acc.length() > self.Accmax:
             self.acc.scale_to_length(self.Accmax)
@@ -27,6 +26,7 @@ class Asteroide:
 
     def show(self):
         core.Draw.circle((255,255,255),self.position,self.taille,5)
+
         #core.Draw.rect((100,0,120),(self.position.x-15, self.position.y-15,30,30))
 
 

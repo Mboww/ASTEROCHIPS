@@ -15,6 +15,9 @@ from Asteroid.ship import Ship
 
 # from Asteroid.son import Son
 
+#FAIRE ANNEE DANS CREDIT, logo ecole why not ? , linkedin, asté en icon, install police
+
+
 
 def setup():
     # 1280, 720
@@ -37,12 +40,13 @@ def setup():
                 core.Texture("./Asset/SoundOff.png", Vector2(1210, (core.WINDOW_SIZE[1] / 2) + 290), 0, [50, 50]))
     core.memory("Son", 1)
     core.memory("Regles", core.Texture("./Asset/Regles.png", Vector2(-60, 0), 0, [1400, 787]))
-    core.memory("ReglesOK", 0)
+    core.memory("ReglesOK", 1)
     core.memory("Info", core.Texture("./Asset/Info.png", Vector2(1210, 20), 0, [60, 60]))
     core.memory("Vie3", core.Texture("./Asset/Vie.png", Vector2(1100, 10),0,[60, 60]))
     core.memory("Vie2", core.Texture("./Asset/Vie.png", Vector2(1155, 10), 0, [60, 60]))
     core.memory("Vie1", core.Texture("./Asset/Vie.png", Vector2(1210, 10), 0, [60, 60]))
     core.memory("Credit", core.Texture("./Asset/Credit.png", Vector2(0, 0), 0, [1280, 720]))
+    #core.memory("IMGAst", core.Texture("./Asset/ASTEROID.png",Vector2(0, 0), 0, [1280, 720]))
     core.memory("mesProjectiles", [])
     core.memory("mesAsteroides", [])
     #core.memory('monVaisseau',[v])
@@ -197,6 +201,8 @@ def afficherDemarrage():
 
 
 def afficherJeu():
+
+    #ecran = pygame.display.set_mode((core.WINDOW_SIZE))
     if core.getKeyPressList("p"):
         core.memory("etat", Etat.MENU)
 
@@ -244,8 +250,6 @@ def afficherJeu():
                 core.memory('mesProjectiles').remove(p)
                 core.memory('mesAsteroides').remove(a)
                 core.memory('total',Tt)
-
-
 #collision vaisseau
     for a in core.memory('mesAsteroides'):
         result = a.destruction(core.memory("Vaisseau"))
@@ -352,8 +356,8 @@ def afficherCredit():
     core.memory("Credit").show()
     core.cleanScreen()
 
-    core.Draw.text((255, 255, 255), "Meilleur Score : 7000", ((core.WINDOW_SIZE[0] / 2)-510, (core.WINDOW_SIZE[1] / 2)+135), 40,'Cooper Black')
-    core.Draw.text((255, 255, 255), "Meilleur Score : 7000",((core.WINDOW_SIZE[0] / 2) +90, (core.WINDOW_SIZE[1] / 2) + 135), 40, 'Cooper Black')
+    core.Draw.text((255, 255, 255), "Meilleur Score : 7000", ((core.WINDOW_SIZE[0] / 2)-465, (core.WINDOW_SIZE[1] / 2)+140), 30,'Cooper Black')
+    core.Draw.text((255, 255, 255), "Meilleur Score : 7000",((core.WINDOW_SIZE[0] / 2) +140, (core.WINDOW_SIZE[1] / 2) + 140), 30, 'Cooper Black')
 
 
 def run():
