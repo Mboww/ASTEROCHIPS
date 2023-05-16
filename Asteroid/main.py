@@ -52,6 +52,8 @@ def setup():
     #core.memory('monVaisseau',[v])
     core.memory('VieV',3)
     core.memory('total',0)
+    ecran = pygame.display.set_mode((core.WINDOW_SIZE[0], core.WINDOW_SIZE[1]))
+
 
     for i in range(0, 3):
         position_x = random.randint(0, core.WINDOW_SIZE[0])
@@ -170,24 +172,32 @@ def afficherDemarrage():
     core.cleanScreen()
 
     # ----------------------------------------------------------------------
+    if not core.memory("Info").ready:
+        core.memory("Info").load()
+    core.memory("Info").show()
+
+
+
 
     if core.memory("ReglesOK") == 1:
 
+
+
         if core.getMouseLeftClick() or core.getMouseRightClick() or core.getKeyPressList("ESCAPE"):
             core.memory("ReglesOK", 0)
+
+
 
         if not core.memory("Regles").ready:
             core.memory("Regles").load()
 
         core.memory("Regles").show()
-        core.cleanScreen()
+
 
         if core.memory("ReglesOK") == 0:
             time.sleep(0.4)
 
-    if not core.memory("Info").ready:
-        core.memory("Info").load()
-    core.memory("Info").show()
+
 
     # core.Draw.rect((255, 255, 255), (1220, 18, 40, 65), 5)
     Pos_SourisInfo = pygame.mouse.get_pos()
@@ -198,6 +208,9 @@ def afficherDemarrage():
 
         if recInfo.collidepoint(Pos_SourisInfo):
             core.memory("ReglesOK", 1)
+
+
+    core.cleanScreen()
 
 
 def afficherJeu():
@@ -236,6 +249,9 @@ def afficherJeu():
         a.teleportation()
 
 #collision asteroide + calcul score
+
+
+
     Tt=(core.memory('total'))
     for a in core.memory('mesAsteroides'):
         for p in core.memory('mesProjectiles'):
@@ -250,6 +266,9 @@ def afficherJeu():
                 core.memory('mesProjectiles').remove(p)
                 core.memory('mesAsteroides').remove(a)
                 core.memory('total',Tt)
+
+
+
 #collision vaisseau
     for a in core.memory('mesAsteroides'):
         result = a.destruction(core.memory("Vaisseau"))
@@ -356,8 +375,8 @@ def afficherCredit():
     core.memory("Credit").show()
     core.cleanScreen()
 
-    core.Draw.text((255, 255, 255), "Meilleur Score : 7000", ((core.WINDOW_SIZE[0] / 2)-465, (core.WINDOW_SIZE[1] / 2)+140), 30,'Cooper Black')
-    core.Draw.text((255, 255, 255), "Meilleur Score : 7000",((core.WINDOW_SIZE[0] / 2) +140, (core.WINDOW_SIZE[1] / 2) + 140), 30, 'Cooper Black')
+    core.Draw.text((255, 255, 255), "Meilleur Score : 7000", ((core.WINDOW_SIZE[0] / 2)-465, (core.WINDOW_SIZE[1] / 2)+110), 30,'Cooper Black')
+    core.Draw.text((255, 255, 255), "Meilleur Score : 7000",((core.WINDOW_SIZE[0] / 2) +140, (core.WINDOW_SIZE[1] / 2) + 110), 30, 'Cooper Black')
 
 
 def run():

@@ -7,13 +7,18 @@ import core
 
 
 class Asteroide:
-    def __init__(self,x=0,y=0,):  # à mettre à chaque fois pour définir les objets
+    def __init__(self,x=0,y=0, taille=30):  # à mettre à chaque fois pour définir les objets
+        pygame.display.set_mode((1280,720))
         self.taille = 30
         self.vitesse = Vector2()
         self.acc = Vector2()
         self.Vmax = 2
         self.Accmax = 2
         self.position = Vector2(x,y)
+        self.skin = pygame.image.load("./Asset/ASTEROID.png").convert_alpha()
+        self.skin = pygame.transform.scale(self.skin, (self.taille, self.taille))
+        self.rect = self.skin.get_rect(center=(x, y))
+
     def deplacement(self):
         if self.acc.length() > self.Accmax:
             self.acc.scale_to_length(self.Accmax)
@@ -25,7 +30,9 @@ class Asteroide:
         self.position += self.vitesse
 
     def show(self):
-        core.Draw.circle((255,255,255),self.position,self.taille,5)
+        #core.Draw.circle((255,255,255),self.position,self.taille,5)
+        self.rect.center = (self.position.x, self.position.y)
+        pygame.display.get_surface().blit(self.skin, self.rect)
 
         #core.Draw.rect((100,0,120),(self.position.x-15, self.position.y-15,30,30))
 
@@ -53,3 +60,7 @@ class Asteroide:
         if dist < self.taille:
             return True
         return False
+
+asteroideGrand = Asteroide(x=100, y=100, taille=30)
+asteroideMoyen = Asteroide(x=200, y=200, taille=50)
+asteroidePetit = Asteroide(x=300, y=300, taille=80)

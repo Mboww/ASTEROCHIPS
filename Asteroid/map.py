@@ -19,6 +19,9 @@ class Map:
         core.Draw.rect((0, 0, 255), (1270, 0, 10, 720))
         core.Draw.rect((0, 0, 255), (0, 710, 1280, 10))
 
+
+
+
         #RecTeleportation = Rect((0,0,255),(0, 0,10,720)
 
 
