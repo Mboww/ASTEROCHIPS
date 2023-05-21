@@ -191,7 +191,6 @@ def afficherDemarrage():
             core.memory("ReglesOK", 0)
 
 
-
         if not core.memory("Regles").ready:
             core.memory("Regles").load()
 
