@@ -196,7 +196,6 @@ def afficherDemarrage():
 
         core.memory("Regles").show()
 
-
         if core.memory("ReglesOK") == 0:
             time.sleep(0.4)
 
