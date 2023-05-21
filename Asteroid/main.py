@@ -61,6 +61,7 @@ def setup():
         creationAsteroide(position_x, position_y,60)
 
 
+
 def creationProjectile():
     proj = Projectile()
     proj.position = Vector2(core.memory('Vaisseau').Pos) + 35 * core.memory('Vaisseau').orientation
@@ -77,6 +78,9 @@ def creationAsteroide(position_x, position_y,taille):
 
 
 def afficherDemarrage():
+
+    core.memory('total', 0)
+
     # -------------Texte ASTEROID-------------------------------------------
     core.Draw.text((255, 255, 255), "ASTEROID", ((core.WINDOW_SIZE[0] / 2 - 280), (core.WINDOW_SIZE[1] / 2) - 250), 100,
                    'Doctor Glitch')  # Arial #((core.WINDOW_SIZE[0] / 2 - 200), (core.WINDOW_SIZE[1] / 2) - 250), 100)
@@ -215,6 +219,8 @@ def afficherDemarrage():
 
 def afficherJeu():
 
+
+
     #ecran = pygame.display.set_mode((core.WINDOW_SIZE))
     if core.getKeyPressList("p"):
         core.memory("etat", Etat.MENU)
@@ -225,6 +231,7 @@ def afficherJeu():
     core.memory('Vaisseau').deplacement()
     core.memory('Vaisseau').show()
     core.memory('Vaisseau').teleportation()
+
 
 #lancer projectiles
     if core.getKeyPressList("SPACE"):
@@ -275,11 +282,11 @@ def afficherJeu():
         if result:
             core.memory("Vaisseau").NbrVie -= 1
             core.memory("Vaisseau").Pos = Vector2((core.WINDOW_SIZE[0]/2),(core.WINDOW_SIZE[1]/2))
+
         if core.memory("Vaisseau").NbrVie == 0:
             core.memory("etat", Etat.GAMEOVER)
 
-            #Nbrdevie = core.memory("VieV")
-            #Nbrdevie -= Nbrdevie
+
 
     if len(core.memory('mesAsteroides')) == 0:
         for i in range(0, 3):
@@ -302,17 +309,28 @@ def afficherJeu():
         core.memory("Vie1").load()
 
 
-    if core.memory("VieV") == 3 :
+    if core.memory("Vaisseau").NbrVie == 3:
+    #if core.memory("VieV") == 3 :
         core.memory("Vie3").show()
         core.memory("Vie2").show()
         core.memory("Vie1").show()
 
-    if core.memory("VieV") == 2 :
+    if core.memory("Vaisseau").NbrVie == 2:
+    #if core.memory("VieV") == 2 :
         core.memory("Vie2").show()
         core.memory("Vie1").show()
 
-    if core.memory("VieV") == 1 :
+    if core.memory("Vaisseau").NbrVie == 1:
+    #if core.memory("VieV") == 1 :
         core.memory("Vie1").show()
+
+    if core.memory("Vaisseau").NbrVie == 0:
+        core.memory("Vaisseau").NbrVie = 3
+        core.memory("Vie3").show()
+        core.memory("Vie2").show()
+        core.memory("Vie1").show()
+
+
 
     core.cleanScreen()
 
@@ -334,6 +352,7 @@ def afficherGameOver():
     core.Draw.text((255, 255, 255), "GAMEOVER", (365, 280), 30)
     core.Draw.text((255, 255, 255), "SCORE:", (15, 15), 35, 'Arial')
     core.Draw.text((255, 255, 255), str(core.memory("total")), (142, 15), 35, 'Arial')
+
     if core.getKeyPressList("ESCAPE"):
         core.memory("etat", Etat.DEMARRAGE)
 
@@ -381,6 +400,7 @@ def afficherCredit():
 
 def run():
     core.cleanScreen()
+
     if core.memory('etat') == Etat.DEMARRAGE:
         afficherDemarrage()
 
