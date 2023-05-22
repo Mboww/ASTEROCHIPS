@@ -80,7 +80,7 @@ def creationAsteroide(position_x, position_y,taille):
 def afficherDemarrage():
 
     core.memory('total', 0)
-    core.memory('Vaisseau').__init__()
+
 
     # -------------Texte ASTEROID-------------------------------------------
     core.Draw.text((255, 255, 255), "ASTEROID", ((core.WINDOW_SIZE[0] / 2 - 280), (core.WINDOW_SIZE[1] / 2) - 250), 100,
@@ -348,6 +348,10 @@ def afficherJeu():
 
 
 def afficherGameOver():
+
+    core.memory('Vaisseau').__init__()
+    core.memory('mesAsteroides').__init__()
+
     core.Draw.text((255, 255, 255), "GAMEOVER", (365, 280), 30)
     core.Draw.text((255, 255, 255), "SCORE:", (15, 15), 35, 'Arial')
     core.Draw.text((255, 255, 255), str(core.memory("total")), (142, 15), 35, 'Arial')
