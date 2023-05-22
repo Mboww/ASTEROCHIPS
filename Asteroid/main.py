@@ -80,6 +80,7 @@ def creationAsteroide(position_x, position_y,taille):
 def afficherDemarrage():
 
     core.memory('total', 0)
+    core.memory('Vaisseau').__init__()
 
     # -------------Texte ASTEROID-------------------------------------------
     core.Draw.text((255, 255, 255), "ASTEROID", ((core.WINDOW_SIZE[0] / 2 - 280), (core.WINDOW_SIZE[1] / 2) - 250), 100,
@@ -354,7 +355,19 @@ def afficherGameOver():
     if core.getKeyPressList("ESCAPE"):
         core.memory("etat", Etat.DEMARRAGE)
 
+    core.Draw.text((255, 255, 255), "RETOUR", ((core.WINDOW_SIZE[0] / 2)-100, (core.WINDOW_SIZE[1] / 2)), 60)
+    core.Draw.rect((255, 255, 255), ((core.WINDOW_SIZE[0] / 2)-120, (core.WINDOW_SIZE[1] / 2) , 260, 65), 5)
+    Pos_SourisPlay = pygame.mouse.get_pos()
+    recPlay = Rect((core.WINDOW_SIZE[0] / 2)-100, (core.WINDOW_SIZE[1] / 2), 305, 55)
 
+    if recPlay.collidepoint(Pos_SourisPlay):
+        core.Draw.text((255, 255, 0), "RETOUR", ((core.WINDOW_SIZE[0] / 2)-100, (core.WINDOW_SIZE[1] / 2)), 60)
+
+        if core.getMouseLeftClick():
+            Pos_SourisPlay = core.getMouseLeftClick()
+
+            if recPlay.collidepoint(Pos_SourisPlay):
+                core.memory("etat", Etat.DEMARRAGE)
 def afficherMenu():
     if core.getKeyPressList("ESCAPE"):
         core.memory("etat", Etat.JEU)
@@ -392,7 +405,7 @@ def afficherCredit():
     core.memory("Credit").show()
     core.cleanScreen()
 
-    core.Draw.text((255, 255, 255), "Meilleur Score : 7000", ((core.WINDOW_SIZE[0] / 2)-465, (core.WINDOW_SIZE[1] / 2)+110), 30,'Cooper Black')
+    core.Draw.text((255, 255, 255), "Meilleur Score : 2000", ((core.WINDOW_SIZE[0] / 2)-465, (core.WINDOW_SIZE[1] / 2)+110), 30,'Cooper Black')
     core.Draw.text((255, 255, 255), "Meilleur Score : 7000",((core.WINDOW_SIZE[0] / 2) +140, (core.WINDOW_SIZE[1] / 2) + 110), 30, 'Cooper Black')
 
 

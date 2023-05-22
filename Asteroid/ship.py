@@ -58,7 +58,7 @@ class Ship:
         hauteur = Vector2(self.orientation)
         hauteur.scale_to_length(40/3)
         hauteur = hauteur + self.Pos
-        core.Draw.circle((0, 0, 255), hauteur, 18, 1)
+        core.Draw.circle((0, 0, 255), hauteur, 20)
         core.Draw.polygon((255,255,255),((p1),(p2),(p3)),1)
 
 
