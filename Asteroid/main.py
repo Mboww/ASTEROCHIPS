@@ -78,6 +78,8 @@ def creationAsteroide(position_x, position_y,taille):
 
 
 def afficherDemarrage():
+    core.memory('Vaisseau').__init__()
+    core.memory('mesAsteroides').__init__()
 
     core.memory('total', 0)
 
@@ -248,15 +250,13 @@ def afficherJeu():
         p.deplacement()
         p.draw()
 
-# spawn asteroide
+# gestion des asteroides
     for a in core.memory('mesAsteroides'):
         a.show()
         a.deplacement()
         a.teleportation()
 
 #collision asteroide + calcul score
-
-
 
     Tt=(core.memory('total'))
     for a in core.memory('mesAsteroides'):
@@ -280,20 +280,22 @@ def afficherJeu():
         result = a.destruction(core.memory("Vaisseau"))
         if result:
             core.memory("Vaisseau").NbrVie -= 1
+            Tt += 20
+            core.memory('total', Tt)
             core.memory("Vaisseau").Pos = Vector2((core.WINDOW_SIZE[0]/2),(core.WINDOW_SIZE[1]/2))
 
         if core.memory("Vaisseau").NbrVie == 0:
+            Tt += 20
+            core.memory('total', Tt)
             core.memory("etat", Etat.GAMEOVER)
 
 
-
+# respawn des asteroides
     if len(core.memory('mesAsteroides')) == 0:
         for i in range(0, 3):
             position_x = random.randint(0, core.WINDOW_SIZE[0])
             position_y = random.randint(-10, 10)
             creationAsteroide(position_x, position_y, 60)
-
-
 
 
 #-------------------Gestion des Vies---------
@@ -349,16 +351,21 @@ def afficherJeu():
 
 def afficherGameOver():
 
+#----- REMISE A ZERO ----
     core.memory('Vaisseau').__init__()
     core.memory('mesAsteroides').__init__()
 
+#--- Texte Game over  ---
     core.Draw.text((255, 255, 255), "GAMEOVER", (365, 280), 30)
+#---Texte SCORE ---
     core.Draw.text((255, 255, 255), "SCORE:", (15, 15), 35, 'Arial')
     core.Draw.text((255, 255, 255), str(core.memory("total")), (142, 15), 35, 'Arial')
 
+#---- retour page de démarrage --
     if core.getKeyPressList("ESCAPE"):
         core.memory("etat", Etat.DEMARRAGE)
 
+#------ Texte + bouton retour sur la page de démarrage ----
     core.Draw.text((255, 255, 255), "RETOUR", ((core.WINDOW_SIZE[0] / 2)-100, (core.WINDOW_SIZE[1] / 2)), 60)
     core.Draw.rect((255, 255, 255), ((core.WINDOW_SIZE[0] / 2)-120, (core.WINDOW_SIZE[1] / 2) , 260, 65), 5)
     Pos_SourisPlay = pygame.mouse.get_pos()
@@ -372,16 +379,41 @@ def afficherGameOver():
 
             if recPlay.collidepoint(Pos_SourisPlay):
                 core.memory("etat", Etat.DEMARRAGE)
+
+#------ Texte + bouton rejouer une partie + RAZ du score ----
+
+    core.Draw.text((255, 255, 255), "REJOUER", ((core.WINDOW_SIZE[0] / 2) - 180, (core.WINDOW_SIZE[1] / 2) + 150), 70,'')
+    core.Draw.rect((255, 255, 255), ((core.WINDOW_SIZE[0] / 2) - 183, (core.WINDOW_SIZE[1] / 2) + 145, 360, 55), 5)
+
+    Pos_SourisAgain = pygame.mouse.get_pos()
+    recAgain = Rect((core.WINDOW_SIZE[0] / 2) - 183, (core.WINDOW_SIZE[1] / 2) + 145, 360, 55)
+
+    if recAgain.collidepoint(Pos_SourisAgain):
+        core.Draw.text((255, 255, 0), "REJOUER", ((core.WINDOW_SIZE[0] / 2) - 180, (core.WINDOW_SIZE[1] / 2) + 150),
+                       70, '')
+        if core.getMouseLeftClick():
+            Pos_SourisAgain = core.getMouseLeftClick()
+
+            if recAgain.collidepoint(Pos_SourisAgain):
+                core.memory('total', 0)
+                core.memory("etat", Etat.JEU)
+
+
 def afficherMenu():
+
+#--------- JEU EN PAUSE----
+# reprise du jeu ! attention ! le vaisseau bouge toujours
     if core.getKeyPressList("ESCAPE"):
         core.memory("etat", Etat.JEU)
 
+#---- texte + score ----
     core.Draw.text((255, 255, 255), "JEU EN PAUSE", (420, core.WINDOW_SIZE[1]/2-200), 80, 'Arial')
     core.Draw.text((255, 255, 255), "SCORE :", (535, core.WINDOW_SIZE[1]/2-100), 50, 'Arial')
     core.Draw.text((255, 255, 255), str(core.memory("total")), (715, core.WINDOW_SIZE[1]/2-100), 50, 'Arial')
     core.Draw.rect((255, 255, 255), ((core.WINDOW_SIZE[0] / 2) - 153, (core.WINDOW_SIZE[1] / 2) - 45, 305, 55), 5)
-    core.Draw.text((255, 255, 255), "CONTINUER", ((core.WINDOW_SIZE[0] / 2) - 150, (core.WINDOW_SIZE[1] / 2) - 40), 70,'')  # Arial #((core.WINDOW_SIZE[0] / 2) - 105, (core.WINDOW_SIZE[1] / 2) - 60), 105)
 
+#---- texte + bouton reprise de jeu -----
+    core.Draw.text((255, 255, 255), "CONTINUER", ((core.WINDOW_SIZE[0] / 2) - 150, (core.WINDOW_SIZE[1] / 2) - 40), 70,'')  # Arial #((core.WINDOW_SIZE[0] / 2) - 105, (core.WINDOW_SIZE[1] / 2) - 60), 105)
     Pos_SourisPlay = pygame.mouse.get_pos()
     recPlay = Rect((core.WINDOW_SIZE[0] / 2) - 153, (core.WINDOW_SIZE[1] / 2) - 45, 305, 55)
 
@@ -394,10 +426,25 @@ def afficherMenu():
             if recPlay.collidepoint(Pos_SourisPlay):
                 core.memory("etat", Etat.JEU)
 
+#----- texte + bouton abandon retour page de démarrage -----
+    core.Draw.text((255, 255, 255), "ABANDONNER", ((core.WINDOW_SIZE[0] / 2) - 180, (core.WINDOW_SIZE[1] / 2) + 50), 70,'')
+    core.Draw.rect((255, 255, 255), ((core.WINDOW_SIZE[0] / 2) - 183, (core.WINDOW_SIZE[1] / 2) +45, 360, 55), 5)
+
+    Pos_SourisLose = pygame.mouse.get_pos()
+    recLose = Rect((core.WINDOW_SIZE[0] / 2) - 183, (core.WINDOW_SIZE[1] / 2) + 45, 360, 55)
+
+    if recLose.collidepoint(Pos_SourisLose):
+        core.Draw.text((255, 255, 0), "ABANDONNER", ((core.WINDOW_SIZE[0] / 2) - 180, (core.WINDOW_SIZE[1] / 2) + 50),
+                       70, '')
+        if core.getMouseLeftClick():
+            Pos_SourisLose = core.getMouseLeftClick()
+
+            if recLose.collidepoint(Pos_SourisLose):
+
+                core.memory("etat", Etat.DEMARRAGE)
+
 
     core.cleanScreen()
-
-
 
 def afficherCredit():
     if core.getKeyPressList("ESCAPE"):
@@ -409,7 +456,7 @@ def afficherCredit():
     core.memory("Credit").show()
     core.cleanScreen()
 
-    core.Draw.text((255, 255, 255), "Meilleur Score : 2000", ((core.WINDOW_SIZE[0] / 2)-465, (core.WINDOW_SIZE[1] / 2)+110), 30,'Cooper Black')
+    core.Draw.text((255, 255, 255), "Meilleur Score : 5570", ((core.WINDOW_SIZE[0] / 2)-465, (core.WINDOW_SIZE[1] / 2)+110), 30,'Cooper Black')
     core.Draw.text((255, 255, 255), "Meilleur Score : 7000",((core.WINDOW_SIZE[0] / 2) +140, (core.WINDOW_SIZE[1] / 2) + 110), 30, 'Cooper Black')
 
 
