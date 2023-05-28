@@ -53,6 +53,7 @@ def setup():
     core.memory('VieV',3)
     core.memory('total',0)
     ecran = pygame.display.set_mode((core.WINDOW_SIZE[0], core.WINDOW_SIZE[1]))
+    core.memory("TpsPasser", 0)
 
 
     for i in range(0, 3):
@@ -200,7 +201,7 @@ def afficherDemarrage():
         core.memory("Regles").show()
 
         if core.memory("ReglesOK") == 0:
-            time.sleep(0.4)
+            time.sleep(0.1)
 
 
 
@@ -215,7 +216,6 @@ def afficherDemarrage():
             core.memory("ReglesOK", 1)
 
 
-    core.cleanScreen()
 
 
 def afficherJeu():
@@ -228,7 +228,6 @@ def afficherJeu():
 
     #affichage zone
     core.memory('Map').spawnAst()
-
     core.memory('Vaisseau').deplacement()
     core.memory('Vaisseau').show()
     core.memory('Vaisseau').teleportation()
@@ -272,6 +271,29 @@ def afficherJeu():
                 core.memory('mesProjectiles').remove(p)
                 core.memory('mesAsteroides').remove(a)
                 core.memory('total',Tt)
+
+
+    #calcul score avec temps donc tt les 10 secondes 20 pts
+
+    IntervaleDuScore = 5  # Intervalle de 10 secondes
+    NbrPointGagner = 20  # Augmentation du score de 20 points
+
+    VTpsPasser = (core.memory('TpsPasser'))  # Temps écoulé depuis le début du jeu
+
+    clock = pygame.time.Clock()
+
+    VTpsPasser += clock.tick(60) / 1000.0
+
+    if VTpsPasser >= IntervaleDuScore:
+        # Augmenter le score de 20 points
+        Tt += NbrPointGagner
+
+        # Réinitialiser le temps écoulé
+        VTpsPasser = 0
+
+    core.memory('total', Tt)
+
+    (core.memory('TpsPasser',VTpsPasser))
 
 
 
@@ -333,7 +355,6 @@ def afficherJeu():
 
 
 
-    core.cleanScreen()
 
     if core.getKeyPressList("1"):
         core.memory("VieV", 1)
@@ -356,23 +377,23 @@ def afficherGameOver():
     core.memory('mesAsteroides').__init__()
 
 #--- Texte Game over  ---
-    core.Draw.text((255, 255, 255), "GAMEOVER", (365, 280), 30)
+    core.Draw.text((255, 255, 255), "GAMEOVER", ((core.WINDOW_SIZE[0] / 2)-180, (core.WINDOW_SIZE[1] / 2)-200), 75)
 #---Texte SCORE ---
-    core.Draw.text((255, 255, 255), "SCORE:", (15, 15), 35, 'Arial')
-    core.Draw.text((255, 255, 255), str(core.memory("total")), (142, 15), 35, 'Arial')
-
+    core.Draw.text((255, 255, 255), "SCORE:", ((core.WINDOW_SIZE[0] / 2)-100, (core.WINDOW_SIZE[1] / 2)-60), 50, '')
+    #core.Draw.text((255, 255, 255), str(core.memory("total")), ((core.WINDOW_SIZE[0] / 2)+20, (core.WINDOW_SIZE[1] / 2)-60), 50, '')
+    core.Draw.text((255, 255, 255), "5000", ((core.WINDOW_SIZE[0] / 2)+37, (core.WINDOW_SIZE[1] / 2)-60), 50, '')
 #---- retour page de démarrage --
     if core.getKeyPressList("ESCAPE"):
         core.memory("etat", Etat.DEMARRAGE)
 
 #------ Texte + bouton retour sur la page de démarrage ----
-    core.Draw.text((255, 255, 255), "RETOUR", ((core.WINDOW_SIZE[0] / 2)-100, (core.WINDOW_SIZE[1] / 2)), 60)
-    core.Draw.rect((255, 255, 255), ((core.WINDOW_SIZE[0] / 2)-120, (core.WINDOW_SIZE[1] / 2) , 260, 65), 5)
+    core.Draw.text((255, 255, 255), "RETOUR", ((core.WINDOW_SIZE[0] / 2)-80, (core.WINDOW_SIZE[1] / 2)), 50)
+    #core.Draw.rect((255, 255, 255), ((core.WINDOW_SIZE[0] / 2)-83, (core.WINDOW_SIZE[1] / 2)+5, 180, 50), 5)
     Pos_SourisPlay = pygame.mouse.get_pos()
-    recPlay = Rect((core.WINDOW_SIZE[0] / 2)-100, (core.WINDOW_SIZE[1] / 2), 305, 55)
+    recPlay = Rect((core.WINDOW_SIZE[0] / 2)-83, (core.WINDOW_SIZE[1] / 2)+5, 180, 50)
 
     if recPlay.collidepoint(Pos_SourisPlay):
-        core.Draw.text((255, 255, 0), "RETOUR", ((core.WINDOW_SIZE[0] / 2)-100, (core.WINDOW_SIZE[1] / 2)), 60)
+        core.Draw.text((255, 255, 0), "RETOUR", ((core.WINDOW_SIZE[0] / 2)-80, (core.WINDOW_SIZE[1] / 2)), 50)
 
         if core.getMouseLeftClick():
             Pos_SourisPlay = core.getMouseLeftClick()
@@ -382,15 +403,14 @@ def afficherGameOver():
 
 #------ Texte + bouton rejouer une partie + RAZ du score ----
 
-    core.Draw.text((255, 255, 255), "REJOUER", ((core.WINDOW_SIZE[0] / 2) - 180, (core.WINDOW_SIZE[1] / 2) + 150), 70,'')
-    core.Draw.rect((255, 255, 255), ((core.WINDOW_SIZE[0] / 2) - 183, (core.WINDOW_SIZE[1] / 2) + 145, 360, 55), 5)
+    core.Draw.text((255, 255, 255), "REJOUER", ((core.WINDOW_SIZE[0] / 2)-90, (core.WINDOW_SIZE[1] / 2)+65), 50)
+    #core.Draw.rect((255, 255, 255), ((core.WINDOW_SIZE[0] / 2) - 92, (core.WINDOW_SIZE[1] / 2) + 70, 200, 48), 5)
 
     Pos_SourisAgain = pygame.mouse.get_pos()
-    recAgain = Rect((core.WINDOW_SIZE[0] / 2) - 183, (core.WINDOW_SIZE[1] / 2) + 145, 360, 55)
+    recAgain = Rect((core.WINDOW_SIZE[0] / 2) - 92, (core.WINDOW_SIZE[1] / 2) + 70, 200, 48)
 
     if recAgain.collidepoint(Pos_SourisAgain):
-        core.Draw.text((255, 255, 0), "REJOUER", ((core.WINDOW_SIZE[0] / 2) - 180, (core.WINDOW_SIZE[1] / 2) + 150),
-                       70, '')
+        core.Draw.text((255, 255, 0), "REJOUER", ((core.WINDOW_SIZE[0] / 2)-90, (core.WINDOW_SIZE[1] / 2)+65), 50)
         if core.getMouseLeftClick():
             Pos_SourisAgain = core.getMouseLeftClick()
 
@@ -410,15 +430,15 @@ def afficherMenu():
     core.Draw.text((255, 255, 255), "JEU EN PAUSE", (420, core.WINDOW_SIZE[1]/2-200), 80, 'Arial')
     core.Draw.text((255, 255, 255), "SCORE :", (535, core.WINDOW_SIZE[1]/2-100), 50, 'Arial')
     core.Draw.text((255, 255, 255), str(core.memory("total")), (715, core.WINDOW_SIZE[1]/2-100), 50, 'Arial')
-    core.Draw.rect((255, 255, 255), ((core.WINDOW_SIZE[0] / 2) - 153, (core.WINDOW_SIZE[1] / 2) - 45, 305, 55), 5)
+    #core.Draw.rect((255, 255, 255), ((core.WINDOW_SIZE[0] / 2) - 153, (core.WINDOW_SIZE[1] / 2) - 25, 305, 55), 5)
 
 #---- texte + bouton reprise de jeu -----
-    core.Draw.text((255, 255, 255), "CONTINUER", ((core.WINDOW_SIZE[0] / 2) - 150, (core.WINDOW_SIZE[1] / 2) - 40), 70,'')  # Arial #((core.WINDOW_SIZE[0] / 2) - 105, (core.WINDOW_SIZE[1] / 2) - 60), 105)
+    core.Draw.text((255, 255, 255), "CONTINUER", ((core.WINDOW_SIZE[0] / 2) - 150, (core.WINDOW_SIZE[1] / 2) - 20), 70,'')  # Arial #((core.WINDOW_SIZE[0] / 2) - 105, (core.WINDOW_SIZE[1] / 2) - 60), 105)
     Pos_SourisPlay = pygame.mouse.get_pos()
-    recPlay = Rect((core.WINDOW_SIZE[0] / 2) - 153, (core.WINDOW_SIZE[1] / 2) - 45, 305, 55)
+    recPlay = Rect((core.WINDOW_SIZE[0] / 2) - 153, (core.WINDOW_SIZE[1] / 2) - 25, 305, 55)
 
     if recPlay.collidepoint(Pos_SourisPlay):
-        core.Draw.text((255, 255, 0), "CONTINUER", ((core.WINDOW_SIZE[0] / 2) - 150, (core.WINDOW_SIZE[1] / 2) - 40), 70,'')  # Arial #((core.WINDOW_SIZE[0] / 2) - 105, (core.WINDOW_SIZE[1] / 2) - 60), 105)
+        core.Draw.text((255, 255, 0), "CONTINUER", ((core.WINDOW_SIZE[0] / 2) - 150, (core.WINDOW_SIZE[1] / 2) - 20), 70,'')  # Arial #((core.WINDOW_SIZE[0] / 2) - 105, (core.WINDOW_SIZE[1] / 2) - 60), 105)
 
         if core.getMouseLeftClick():
             Pos_SourisPlay = core.getMouseLeftClick()
@@ -428,14 +448,13 @@ def afficherMenu():
 
 #----- texte + bouton abandon retour page de démarrage -----
     core.Draw.text((255, 255, 255), "ABANDONNER", ((core.WINDOW_SIZE[0] / 2) - 180, (core.WINDOW_SIZE[1] / 2) + 50), 70,'')
-    core.Draw.rect((255, 255, 255), ((core.WINDOW_SIZE[0] / 2) - 183, (core.WINDOW_SIZE[1] / 2) +45, 360, 55), 5)
+    #core.Draw.rect((255, 255, 255), ((core.WINDOW_SIZE[0] / 2) - 183, (core.WINDOW_SIZE[1] / 2) +45, 360, 55), 5)
 
     Pos_SourisLose = pygame.mouse.get_pos()
     recLose = Rect((core.WINDOW_SIZE[0] / 2) - 183, (core.WINDOW_SIZE[1] / 2) + 45, 360, 55)
 
     if recLose.collidepoint(Pos_SourisLose):
-        core.Draw.text((255, 255, 0), "ABANDONNER", ((core.WINDOW_SIZE[0] / 2) - 180, (core.WINDOW_SIZE[1] / 2) + 50),
-                       70, '')
+        core.Draw.text((255, 255, 0), "ABANDONNER", ((core.WINDOW_SIZE[0] / 2) - 180, (core.WINDOW_SIZE[1] / 2) + 50),70, '')
         if core.getMouseLeftClick():
             Pos_SourisLose = core.getMouseLeftClick()
 
@@ -444,7 +463,6 @@ def afficherMenu():
                 core.memory("etat", Etat.DEMARRAGE)
 
 
-    core.cleanScreen()
 
 def afficherCredit():
     if core.getKeyPressList("ESCAPE"):
@@ -454,7 +472,6 @@ def afficherCredit():
     if not core.memory("Credit").ready:
         core.memory("Credit").load()
     core.memory("Credit").show()
-    core.cleanScreen()
 
     core.Draw.text((255, 255, 255), "Meilleur Score : 5570", ((core.WINDOW_SIZE[0] / 2)-465, (core.WINDOW_SIZE[1] / 2)+110), 30,'Cooper Black')
     core.Draw.text((255, 255, 255), "Meilleur Score : 7000",((core.WINDOW_SIZE[0] / 2) +140, (core.WINDOW_SIZE[1] / 2) + 110), 30, 'Cooper Black')
