@@ -18,7 +18,7 @@ class Ship:
         self.Mass = 1
         self.orientation = Vector2(0, -1)
         self.name = "monvaisseau"
-        self.radius = 9
+        self.length = 19
 
 
     def deplacement(self):

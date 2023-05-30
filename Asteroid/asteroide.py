@@ -10,7 +10,6 @@ class Asteroide:
     def __init__(self,x=0,y=0, taille=30):  # à mettre à chaque fois pour définir les objets
         #pygame.display.set_mode((1280,720))
         self.taille = 30
-        self.radius = 15
         self.vitesse = Vector2()
         self.acc = Vector2()
         self.Vmax = 2
@@ -37,7 +36,6 @@ class Asteroide:
 
         #core.Draw.rect((100,0,120),(self.position.x-15, self.position.y-15,30,30))
 
-
     def teleportation(self):
         if self.position.x < 0: #sortie gauche
             self.position.x = core.WINDOW_SIZE[0]
@@ -59,7 +57,7 @@ class Asteroide:
 
         dist = self.position.distance_to(vaisseau.Pos)
         #if dist < self.radius + vaisseau.radius:
-        if dist < self.taille:
+        if dist < (self.taille + vaisseau.length):
             return True
         return False
 

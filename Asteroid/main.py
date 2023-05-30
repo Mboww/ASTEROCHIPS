@@ -381,7 +381,7 @@ def afficherGameOver():
 #---Texte SCORE ---
     core.Draw.text((255, 255, 255), "SCORE:", ((core.WINDOW_SIZE[0] / 2)-100, (core.WINDOW_SIZE[1] / 2)-60), 50, '')
     #core.Draw.text((255, 255, 255), str(core.memory("total")), ((core.WINDOW_SIZE[0] / 2)+20, (core.WINDOW_SIZE[1] / 2)-60), 50, '')
-    core.Draw.text((255, 255, 255), "5000", ((core.WINDOW_SIZE[0] / 2)+37, (core.WINDOW_SIZE[1] / 2)-60), 50, '')
+    core.Draw.text((255, 255, 255), str(core.memory("total")), ((core.WINDOW_SIZE[0] / 2)+37, (core.WINDOW_SIZE[1] / 2)-60), 50, '')
 #---- retour page de démarrage --
     if core.getKeyPressList("ESCAPE"):
         core.memory("etat", Etat.DEMARRAGE)
