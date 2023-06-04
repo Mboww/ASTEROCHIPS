@@ -15,7 +15,7 @@ from Asteroid.ship import Ship
 
 # from Asteroid.son import Son
 
-#FAIRE ANNEE DANS CREDIT, logo ecole why not ? , linkedin, asté en icon, install police
+#FAIRE ANNEE DANS CREDIT, logo ecole why not ? , asté en icon, install police
 
 
 
@@ -26,7 +26,6 @@ def setup():
     core.fps = 60
     # core.memory("etat", Etat.DEMARRAGE)
     core.memory("etat", Etat(0))
-
     Format = 0
     v=Ship()
     core.memory(("Vaisseau"), v)
@@ -38,7 +37,7 @@ def setup():
                 core.Texture("./Asset/SoundOn.png", Vector2(1210, (core.WINDOW_SIZE[1] / 2) + 290), 0, [50, 50]))
     core.memory("SonOff",
                 core.Texture("./Asset/SoundOff.png", Vector2(1210, (core.WINDOW_SIZE[1] / 2) + 290), 0, [50, 50]))
-    core.memory("Son", 1)
+    core.memory("Son", 0)
     core.memory("Regles", core.Texture("./Asset/Regles.png", Vector2(-60, 0), 0, [1400, 787]))
     core.memory("ReglesOK", 1)
     core.memory("Info", core.Texture("./Asset/Info.png", Vector2(1210, 20), 0, [60, 60]))
@@ -46,6 +45,8 @@ def setup():
     core.memory("Vie2", core.Texture("./Asset/Vie.png", Vector2(1155, 10), 0, [60, 60]))
     core.memory("Vie1", core.Texture("./Asset/Vie.png", Vector2(1210, 10), 0, [60, 60]))
     core.memory("Credit", core.Texture("./Asset/Credit.png", Vector2(0, 0), 0, [1280, 720]))
+    core.memory("NomJeu", core.Texture("./Asset/NomJeu.png", Vector2(0, 0), 0, [1280, 720]))
+    core.memory("BG", core.Texture("./Asset/BG.jpg", Vector2(0, 0), 0, [1280, 720]))
     #core.memory("IMGAst", core.Texture("./Asset/ASTEROID.png",Vector2(0, 0), 0, [1280, 720]))
     core.memory("mesProjectiles", [])
     core.memory("mesAsteroides", [])
@@ -54,6 +55,22 @@ def setup():
     core.memory('total',0)
     ecran = pygame.display.set_mode((core.WINDOW_SIZE[0], core.WINDOW_SIZE[1]))
     core.memory("TpsPasser", 0)
+
+    pygame.display.set_mode(core.WINDOW_SIZE)
+    icon_path = "./Asset/ASTEROID.png"
+    icon = pygame.image.load(icon_path)
+    pygame.display.set_icon(icon)
+    pygame.display.set_caption("AsteroShips")
+    pygame.font.init()
+    pygame.font.Font()
+    policeotf = "./Asset/Doctor Glitch.otf"
+    police = pygame.font.Font(policeotf)
+
+    musique = pygame.mixer.music.load("./Asset/Music.mp3")
+    pygame.mixer.music.set_volume(0.02)
+
+
+
 
 
     for i in range(0, 3):
@@ -79,15 +96,33 @@ def creationAsteroide(position_x, position_y,taille):
 
 
 def afficherDemarrage():
+    pygame.display.set_caption("AsteroShips")
     core.memory('Vaisseau').__init__()
     core.memory('mesAsteroides').__init__()
 
     core.memory('total', 0)
 
+    # -------------BG-------------------------------------------
 
-    # -------------Texte ASTEROID-------------------------------------------
-    core.Draw.text((255, 255, 255), "ASTEROID", ((core.WINDOW_SIZE[0] / 2 - 280), (core.WINDOW_SIZE[1] / 2) - 250), 100,
-                   'Doctor Glitch')  # Arial #((core.WINDOW_SIZE[0] / 2 - 200), (core.WINDOW_SIZE[1] / 2) - 250), 100)
+    if not core.memory("BG").ready:
+        core.memory("BG").load()
+    core.memory("BG").show()
+
+    # ----------------------------------------------------------------------
+
+
+
+
+
+    # -------------IMG ASTEROID-------------------------------------------
+    #core.Draw.text((255, 255, 255), "ASTEROID", ((core.WINDOW_SIZE[0] / 2 - 280), (core.WINDOW_SIZE[1] / 2) - 250), 100,
+    #               'Doctor Glitch')  # Arial #((core.WINDOW_SIZE[0] / 2 - 200), (core.WINDOW_SIZE[1] / 2) - 250), 100)
+
+    if not core.memory("NomJeu").ready:
+        core.memory("NomJeu").load()
+    core.memory("NomJeu").show()
+
+
     # ----------------------------------------------------------------------
 
     # -------------Texte PLAY/EXIT/CREDIT-------------------------------------------
@@ -168,8 +203,12 @@ def afficherDemarrage():
             if recSon.collidepoint(Pos_SourisSon):
                 if core.memory("Son") == 0:
                     core.memory("Son", 1)
+                    pygame.mixer.music.play(-1)  # -1 pour répéter en boucle la musique
+
+
                 elif core.memory("Son") == 1:
                     core.memory("Son", 0)
+                    pygame.mixer.music.stop()
 
     if core.memory("Son") == 0:
         core.memory("SonOff").show()
@@ -474,11 +513,13 @@ def afficherCredit():
     core.memory("Credit").show()
 
     core.Draw.text((255, 255, 255), "Meilleur Score : 5570", ((core.WINDOW_SIZE[0] / 2)-465, (core.WINDOW_SIZE[1] / 2)+110), 30,'Cooper Black')
-    core.Draw.text((255, 255, 255), "Meilleur Score : 7000",((core.WINDOW_SIZE[0] / 2) +140, (core.WINDOW_SIZE[1] / 2) + 110), 30, 'Cooper Black')
+    core.Draw.text((255, 255, 255), "Meilleur Score : 1000",((core.WINDOW_SIZE[0] / 2) +140, (core.WINDOW_SIZE[1] / 2) + 110), 30, 'Cooper Black')
 
 
 def run():
+    pygame.display.set_caption("AsteroShips")
     core.cleanScreen()
+    pygame.display.set_caption("AsteroShips")
 
     if core.memory('etat') == Etat.DEMARRAGE:
         afficherDemarrage()
