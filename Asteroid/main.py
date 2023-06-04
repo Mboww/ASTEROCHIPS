@@ -13,11 +13,6 @@ from Asteroid.projectil import Projectile
 from Asteroid.ship import Ship
 
 
-# from Asteroid.son import Son
-
-#FAIRE ANNEE DANS CREDIT, logo ecole why not ? , asté en icon, install police
-
-
 
 def setup():
     # 1280, 720
@@ -67,7 +62,9 @@ def setup():
     police = pygame.font.Font(policeotf)
 
     musique = pygame.mixer.music.load("./Asset/Music.mp3")
-    pygame.mixer.music.set_volume(0.02)
+    volume = 0.02
+    pygame.mixer.music.set_volume(volume)
+    core.memory("Volume", volume)
 
 
 
@@ -189,10 +186,15 @@ def afficherDemarrage():
     Pos_SourisSon = pygame.mouse.get_pos()
     recSon = Rect((1210, (core.WINDOW_SIZE[1] / 2) + 290, 50, 50))
 
+    volume = core.memory("Volume")
+
     if not core.memory("SonOn").ready:
         core.memory("SonOn").load()
     if not core.memory("SonOff").ready:
         core.memory("SonOff").load()
+
+
+
 
     if recSon.collidepoint(Pos_SourisSon):
 
@@ -203,20 +205,23 @@ def afficherDemarrage():
             if recSon.collidepoint(Pos_SourisSon):
                 if core.memory("Son") == 0:
                     core.memory("Son", 1)
-                    pygame.mixer.music.play(-1)  # -1 pour répéter en boucle la musique
+                    pygame.mixer.music.play(-1)  # -1 = réptition infini
 
 
                 elif core.memory("Son") == 1:
                     core.memory("Son", 0)
                     pygame.mixer.music.stop()
 
+
+
+        core.memory("Volume", volume)
     if core.memory("Son") == 0:
         core.memory("SonOff").show()
 
     if core.memory("Son") == 1:
         core.memory("SonOn").show()
 
-    core.cleanScreen()
+
 
     # ----------------------------------------------------------------------
     if not core.memory("Info").ready:
