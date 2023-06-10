@@ -30,7 +30,7 @@ class Asteroide:
         self.position += self.vitesse
 
     def show(self):
-        core.Draw.circle((255,255,255),self.position,self.taille,5)
+        core.Draw.circle((150,150,150),self.position,self.taille,0)
         #self.rect.center = (self.position.x, self.position.y)
         #pygame.display.get_surface().blit(self.skin, self.rect)
 

@@ -8,7 +8,9 @@ import core
 
 
 class Ship:
-    def __init__(self):
+    def __init__(self,x=0,y=0):
+
+        self.taille = 30
         self.Pos = Vector2((core.WINDOW_SIZE[0]/2),(core.WINDOW_SIZE[1]/2))
         self.Vitesse = Vector2(0, 0)
         self.Acc = Vector2(0, 0)
@@ -19,6 +21,8 @@ class Ship:
         self.orientation = Vector2(0, -1)
         self.name = "monvaisseau"
         self.length = 19
+        self.position = Vector2(x, y)
+
 
 
     def deplacement(self):
@@ -60,10 +64,13 @@ class Ship:
         hauteur = Vector2(self.orientation)
         hauteur.scale_to_length(40/3)
         hauteur = hauteur + self.Pos
-        core.Draw.circle((0, 0, 255), hauteur, 19)
-        core.Draw.polygon((255,255,255),((p1),(p2),(p3)),1)
+        #core.Draw.circle((0, 0, 255), hauteur, 19)
+        core.Draw.polygon((255,255,255),((p1),(p2),(p3)),2)
 
-
+        #pygame.display.set_mode((1280, 720))
+        #self.skin = pygame.image.load("./Asset/Ship.png").convert_alpha()
+        #self.skin = pygame.transform.scale(self.skin, (self.taille, self.taille))
+        #self.rect = self.skin.get_rect(center=(x, y))
 
     def teleportation(self):
         if self.Pos.x < 0: #sortie gauche

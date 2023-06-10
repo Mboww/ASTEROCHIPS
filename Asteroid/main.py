@@ -15,6 +15,9 @@ from Asteroid.ship import Ship
 
 
 def setup():
+
+    #mettre skin sur ship, faire l'executable,
+
     # 1280, 720
     core.WINDOW_SIZE = [1280, 720]
     # core.memory("etat",Etat.MENU) <= initialisation
@@ -265,6 +268,10 @@ def afficherDemarrage():
 def afficherJeu():
 
 
+    if not core.memory("BG").ready:
+        core.memory("BG").load()
+    core.memory("BG").show()
+
 
     #ecran = pygame.display.set_mode((core.WINDOW_SIZE))
     if core.getKeyPressList("p"):
@@ -317,10 +324,10 @@ def afficherJeu():
                 core.memory('total',Tt)
 
 
-    #calcul score avec temps donc tt les 10 secondes 20 pts
+    #calcul score avec temps donc tt les 2 secondes 10 pts
 
-    IntervaleDuScore = 5  # Intervalle de 10 secondes
-    NbrPointGagner = 20  # Augmentation du score de 20 points
+    IntervaleDuScore = 2  # Intervalle de 2 secondes
+    NbrPointGagner = 10  # Augmentation du score de 10 points
 
     VTpsPasser = (core.memory('TpsPasser'))  # Temps écoulé depuis le début du jeu
 
@@ -350,10 +357,15 @@ def afficherJeu():
             core.memory('total', Tt)
             core.memory("Vaisseau").Pos = Vector2((core.WINDOW_SIZE[0]/2),(core.WINDOW_SIZE[1]/2))
 
+
+
+
         if core.memory("Vaisseau").NbrVie == 0:
             Tt += 20
             core.memory('total', Tt)
             core.memory("etat", Etat.GAMEOVER)
+
+
 
 
 # respawn des asteroides
