@@ -7,3 +7,5 @@ class Etat(Enum):
     GAMEOVER = 2
     MENU = 3
     CREDIT = 4
+
+

@@ -4,6 +4,7 @@ from pygame.rect import Rect
 import core
 
 
+
 class Map:
     def __init__(self):
         self.taille = Vector2(core.WINDOW_SIZE)

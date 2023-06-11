@@ -3,7 +3,8 @@ import time
 from pygame import Vector2
 
 import core
-from Asteroid.ship import Ship
+from ship import Ship
+
 
 
 class Projectile:
