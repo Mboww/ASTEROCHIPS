@@ -14,7 +14,6 @@ from ship import Ship
 
 
 
-
 def setup():
     # mettre skin sur ship, faire l'executable,
 
@@ -30,6 +29,7 @@ def setup():
 
     core.memory(("Asteroide"), Asteroide())
     core.memory(("Map"), Map())
+    core.memory(("newVie"), Relive())
 
     core.memory("SonOn",
                 core.Texture("./Asset/SoundOn.png",
@@ -91,6 +91,9 @@ def creationAsteroide(position_x, position_y, taille):
     ast.acc = Vector2((random.uniform(-1, 1)), random.uniform(-1, 1))
     ast.taille = taille
     core.memory('mesAsteroides').append(ast)
+
+def creationRelive (position_x, position_y):
+    newVie = Relive()
 
 
 def afficherDemarrage():
