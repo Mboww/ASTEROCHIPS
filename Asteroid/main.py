@@ -1,4 +1,5 @@
 import random
+import sys
 import time
 
 import pygame
@@ -46,7 +47,7 @@ def setup():
     core.memory("mesAsteroides", [])
     core.memory('VieV', 3)
     core.memory('total', 0)
-    ecran = pygame.display.set_mode((core.WINDOW_SIZE[0], core.WINDOW_SIZE[1]))
+    #ecran = pygame.display.set_mode((core.WINDOW_SIZE[0], core.WINDOW_SIZE[1]))
     core.memory("TpsPasser", 0)
 
     pygame.display.set_mode(core.WINDOW_SIZE)
@@ -141,7 +142,7 @@ def afficherDemarrage():
 
             if recExit.collidepoint(Pos_SourisExit):
                 time.sleep(0.1)
-                exit()
+                sys.exit()
 
     # ----------------------------------------------------------------------
 
@@ -305,6 +306,8 @@ def afficherJeu():
             if a.taille > 15:
                 creationAsteroide(a.position.x, a.position.y, a.taille / 2)
                 creationAsteroide(a.position.x, a.position.y, a.taille / 2)
+                core.memory('mesAsteroides').remove(a)
+            if a.taille <= 15:
                 core.memory('mesAsteroides').remove(a)
             Tt += 20
             core.memory('total', Tt)
