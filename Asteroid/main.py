@@ -77,6 +77,7 @@ def setup():
         creationAsteroide(position_x, position_y, 60)
 
 
+
 def creationProjectile():
     proj = Projectile()
     proj.position = Vector2(core.memory('Vaisseau').Pos) + 35 * core.memory('Vaisseau').orientation
@@ -278,7 +279,6 @@ def afficherJeu():
         a.teleportation()
 
     # collision asteroide + calcul score
-
     Tt = (core.memory('total'))
     for a in core.memory('mesAsteroides'):
         for p in core.memory('mesProjectiles'):
@@ -295,7 +295,6 @@ def afficherJeu():
                 core.memory('total', Tt)
 
     # calcul score avec temps donc tt les 2 secondes 10 pts
-
     IntervaleDuScore = 2  # Intervalle de 2 secondes
     NbrPointGagner = 10  # Augmentation du score de 10 points
 
@@ -321,9 +320,15 @@ def afficherJeu():
         result = a.destruction(core.memory("Vaisseau"))
         if result:
             core.memory("Vaisseau").NbrVie -= 1
+            if a.taille > 15:
+                creationAsteroide(a.position.x, a.position.y, a.taille / 2)
+                creationAsteroide(a.position.x, a.position.y, a.taille / 2)
+                core.memory('mesAsteroides').remove(a)
             Tt += 20
             core.memory('total', Tt)
+
             core.memory("Vaisseau").Pos = Vector2((core.WINDOW_SIZE[0] / 2), (core.WINDOW_SIZE[1] / 2))
+
 
         if core.memory("Vaisseau").NbrVie == 0:
             Tt += 20
@@ -336,6 +341,10 @@ def afficherJeu():
             position_x = random.randint(0, core.WINDOW_SIZE[0])
             position_y = random.randint(-10, 10)
             creationAsteroide(position_x, position_y, 60)
+        if Tt != 0:
+            Tt=core.memory('total')
+            Tt+= 200
+            core.memory('total', Tt)
 
     # -------------------Gestion des Vies---------
 
@@ -389,7 +398,7 @@ def afficherGameOver():
     core.memory('mesAsteroides').__init__()
 
     # --- Texte Game over  ---
-    core.Draw.text((255, 255, 255), "GAMEOVER", ((core.WINDOW_SIZE[0] / 2) - 180, (core.WINDOW_SIZE[1] / 2) - 200), 75)
+    core.Draw.text((255, 255, 255), "GAME OVER", ((core.WINDOW_SIZE[0] / 2) - 180, (core.WINDOW_SIZE[1] / 2) - 200), 75)
     # ---Texte SCORE ---
     core.Draw.text((255, 255, 255), "SCORE:", ((core.WINDOW_SIZE[0] / 2) - 100, (core.WINDOW_SIZE[1] / 2) - 60), 50, '')
     # core.Draw.text((255, 255, 255), str(core.memory("total")), ((core.WINDOW_SIZE[0] / 2)+20, (core.WINDOW_SIZE[1] / 2)-60), 50, '')
