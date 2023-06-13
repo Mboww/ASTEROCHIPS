@@ -13,7 +13,7 @@ class Projectile:
         self.vitesse= Vector2(0,0)
         self.acceleration = Vector2(0,0)
         self.position = Vector2()
-        self.dureedevie = 3
+        self.dureedevie = 1
         self.startTime = time.time()
         self.orientation = Vector2(0, -1)
         self.ship = Ship()
