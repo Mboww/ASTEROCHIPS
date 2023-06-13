@@ -15,13 +15,13 @@ class Ship:
         self.Pos = Vector2((core.WINDOW_SIZE[0]/2),(core.WINDOW_SIZE[1]/2))
         self.Vitesse = Vector2(0, 0)
         self.Acc = Vector2(0, 0)
-        self.VitesseMax = 10
-        self.AccMax = 10
+        self.VitesseMax = 2
+        self.AccMax = 3
         self.NbrVie = 3
         self.Mass = 1
         self.orientation = Vector2(0, -1)
         self.name = "monvaisseau"
-        self.length = 19
+        self.length = 10
         self.position = Vector2(x, y)
 
 
@@ -31,7 +31,14 @@ class Ship:
         if core.getKeyPressList("z"):  # déplacement vers le haut
             self.Acc = Vector2(self.orientation)
             self.Vitesse += self.Acc
-            self.Pos += self.orientation
+            #self.Pos += self.orientation
+            self.Pos += self.Vitesse
+
+            if self.Acc.length() > self.AccMax:
+                self.Acc.scale_to_length(self.AccMax)
+
+            if self.Vitesse.length() > self.VitesseMax:
+                self.Vitesse.scale_to_length(self.VitesseMax)
 
         if core.getKeyPressList("d"): #rotation sens horaire
             self.orientation = self.orientation.rotate(3)
@@ -40,11 +47,13 @@ class Ship:
         if core.getKeyPressList("q"): #rotation sens non-horaire
             self.orientation = self.orientation.rotate(-3)
 
-        self.Pos += self.Acc
-        self.Acc = self.Acc*0.995
+        self.Vitesse = self.Vitesse*0.99
+        self.Pos += self.Vitesse
 
-        if self.Acc.length() < 0.25:
+
+        if self.Acc.length() < 1.5:
             self.Acc = Vector2(0, 0)
+
 
 
     def show(self):

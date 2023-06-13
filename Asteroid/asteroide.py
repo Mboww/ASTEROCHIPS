@@ -58,11 +58,6 @@ class Asteroide:
     def destruction(self, vaisseau):
 
         dist = self.position.distance_to(vaisseau.Pos)
-        #if dist < self.radius + vaisseau.radius:
         if dist < (self.taille + vaisseau.length):
             return True
         return False
-
-asteroideGrand = Asteroide(x=100, y=100, taille=30)
-asteroideMoyen = Asteroide(x=200, y=200, taille=50)
-asteroidePetit = Asteroide(x=300, y=300, taille=80)

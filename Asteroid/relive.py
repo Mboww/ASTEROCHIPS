@@ -1,12 +1,9 @@
 import random
 
 import pygame
-from pygame import Vector2, image
+from pygame import Vector2
 
 import core
-
-
-
 
 class Relive:
     def __init__(self,x=0,y=0, taille=30):  # à mettre à chaque fois pour définir les objets

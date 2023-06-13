@@ -8,10 +8,8 @@ import core
 # from Asteroid import ship
 from asteroide import Asteroide
 from etat import Etat
-from map import Map
 from projectil import Projectile
 from ship import Ship
-
 
 
 def setup():
@@ -19,17 +17,14 @@ def setup():
 
     # 1280, 720
     core.WINDOW_SIZE = [1280, 720]
-    # core.memory("etat",Etat.MENU) <= initialisation
-    core.fps = 60
-    # core.memory("etat", Etat.DEMARRAGE)
+    core.fps = 50
     core.memory("etat", Etat(0))
     Format = 0
     v = Ship()
     core.memory(("Vaisseau"), v)
 
     core.memory(("Asteroide"), Asteroide())
-    core.memory(("Map"), Map())
-    core.memory(("newVie"), Relive())
+    #core.memory(("Map"), Map())
 
     core.memory("SonOn",
                 core.Texture("./Asset/SoundOn.png",
@@ -47,10 +42,8 @@ def setup():
     core.memory("Credit", core.Texture("./Asset/Credit.png", Vector2(0, 0), 0, [1280, 720]))
     core.memory("NomJeu", core.Texture("./Asset/1NomJeu.png", Vector2(0, 0), 0, [1280, 720]))
     core.memory("BG", core.Texture("./Asset/BG.jpg", Vector2(0, 0), 0, [1280, 720]))
-    # core.memory("IMGAst", core.Texture("./Asset/ASTEROID.png",Vector2(0, 0), 0, [1280, 720]))
     core.memory("mesProjectiles", [])
     core.memory("mesAsteroides", [])
-    # core.memory('monVaisseau',[v])
     core.memory('VieV', 3)
     core.memory('total', 0)
     ecran = pygame.display.set_mode((core.WINDOW_SIZE[0], core.WINDOW_SIZE[1]))
@@ -77,7 +70,6 @@ def setup():
         creationAsteroide(position_x, position_y, 60)
 
 
-
 def creationProjectile():
     proj = Projectile()
     proj.position = Vector2(core.memory('Vaisseau').Pos) + 35 * core.memory('Vaisseau').orientation
@@ -91,9 +83,6 @@ def creationAsteroide(position_x, position_y, taille):
     ast.acc = Vector2((random.uniform(-1, 1)), random.uniform(-1, 1))
     ast.taille = taille
     core.memory('mesAsteroides').append(ast)
-
-def creationRelive (position_x, position_y):
-    newVie = Relive()
 
 
 def afficherDemarrage():
@@ -112,8 +101,6 @@ def afficherDemarrage():
     # ----------------------------------------------------------------------
 
     # -------------IMG ASTEROID-------------------------------------------
-    # core.Draw.text((255, 255, 255), "ASTEROID", ((core.WINDOW_SIZE[0] / 2 - 280), (core.WINDOW_SIZE[1] / 2) - 250), 100,
-    #               'Doctor Glitch')  # Arial #((core.WINDOW_SIZE[0] / 2 - 200), (core.WINDOW_SIZE[1] / 2) - 250), 100)
 
     if not core.memory("NomJeu").ready:
         core.memory("NomJeu").load()
@@ -122,9 +109,8 @@ def afficherDemarrage():
     # ----------------------------------------------------------------------
 
     # -------------Texte PLAY/EXIT/CREDIT-------------------------------------------
-    # core.Draw.rect((255, 255, 255), ((core.WINDOW_SIZE[0] / 2) - 100, (core.WINDOW_SIZE[1] / 2) - 62, 198, 70), 5)
     core.Draw.text((255, 255, 255), "PLAY", ((core.WINDOW_SIZE[0] / 2) - 95, (core.WINDOW_SIZE[1] / 2) - 60), 105,
-                   '')  # Arial #((core.WINDOW_SIZE[0] / 2) - 105, (core.WINDOW_SIZE[1] / 2) - 60), 105)
+                   '')
 
     Pos_SourisPlay = pygame.mouse.get_pos()
     recPlay = Rect((core.WINDOW_SIZE[0] / 2) - 100, (core.WINDOW_SIZE[1] / 2) - 62, 198, 70)
@@ -141,9 +127,8 @@ def afficherDemarrage():
 
     # -------------Texte EXIT-------------------------------------------
 
-    # core.Draw.rect((255, 255, 255), ((core.WINDOW_SIZE[0] / 2) - 75, (core.WINDOW_SIZE[1] / 2) + 85, 135, 55), 5)
     core.Draw.text((255, 255, 255), "EXIT", ((core.WINDOW_SIZE[0] / 2) - 68, (core.WINDOW_SIZE[1] / 2) + 90), 70,
-                   '')  # Arial #((core.WINDOW_SIZE[0] / 2) - 65, (core.WINDOW_SIZE[1] / 2) + 80), 70)
+                   '')
 
     Pos_SourisExit = pygame.mouse.get_pos()
     recExit = Rect((core.WINDOW_SIZE[0] / 2) - 75, (core.WINDOW_SIZE[1] / 2) + 85, 135, 55)
@@ -179,9 +164,7 @@ def afficherDemarrage():
             # ---------------------------
 
     # -------------SON------------------------------------------------
-    # if Son == True:
 
-    # core.Draw.rect((255, 255, 255), (1210, (core.WINDOW_SIZE[1] / 2) + 290, 50, 50), 5)
     Pos_SourisSon = pygame.mouse.get_pos()
     recSon = Rect((1210, (core.WINDOW_SIZE[1] / 2) + 290, 50, 50))
 
@@ -233,7 +216,6 @@ def afficherDemarrage():
         if core.memory("ReglesOK") == 0:
             time.sleep(0.1)
 
-    # core.Draw.rect((255, 255, 255), (1220, 18, 40, 65), 5)
     Pos_SourisInfo = pygame.mouse.get_pos()
     recInfo = Rect(1220, 18, 40, 65)
 
@@ -248,13 +230,10 @@ def afficherJeu():
     if not core.memory("BG").ready:
         core.memory("BG").load()
     core.memory("BG").show()
-
-    # ecran = pygame.display.set_mode((core.WINDOW_SIZE))
     if core.getKeyPressList("p"):
         core.memory("etat", Etat.MENU)
 
     # affichage zone
-    core.memory('Map').spawnAst()
     core.memory('Vaisseau').deplacement()
     core.memory('Vaisseau').show()
     core.memory('Vaisseau').teleportation()
@@ -329,8 +308,9 @@ def afficherJeu():
                 core.memory('mesAsteroides').remove(a)
             Tt += 20
             core.memory('total', Tt)
-
-            core.memory("Vaisseau").Pos = Vector2((core.WINDOW_SIZE[0] / 2), (core.WINDOW_SIZE[1] / 2))
+            core.memory('Vaisseau').Pos = Vector2((core.WINDOW_SIZE[0]/2),(core.WINDOW_SIZE[1]/2))
+            core.memory('Vaisseau').orientation = Vector2(0, -1)
+            core.memory('Vaisseau').Acc = Vector2(0, 0)
 
 
         if core.memory("Vaisseau").NbrVie == 0:
@@ -361,18 +341,15 @@ def afficherJeu():
         core.memory("Vie1").load()
 
     if core.memory("Vaisseau").NbrVie == 3:
-        # if core.memory("VieV") == 3 :
         core.memory("Vie3").show()
         core.memory("Vie2").show()
         core.memory("Vie1").show()
 
     if core.memory("Vaisseau").NbrVie == 2:
-        # if core.memory("VieV") == 2 :
         core.memory("Vie2").show()
         core.memory("Vie1").show()
 
     if core.memory("Vaisseau").NbrVie == 1:
-        # if core.memory("VieV") == 1 :
         core.memory("Vie1").show()
 
     if core.memory("Vaisseau").NbrVie == 0:
@@ -404,7 +381,6 @@ def afficherGameOver():
     core.Draw.text((255, 255, 255), "GAME OVER", ((core.WINDOW_SIZE[0] / 2) - 180, (core.WINDOW_SIZE[1] / 2) - 200), 75)
     # ---Texte SCORE ---
     core.Draw.text((255, 255, 255), "SCORE:", ((core.WINDOW_SIZE[0] / 2) - 100, (core.WINDOW_SIZE[1] / 2) - 60), 50, '')
-    # core.Draw.text((255, 255, 255), str(core.memory("total")), ((core.WINDOW_SIZE[0] / 2)+20, (core.WINDOW_SIZE[1] / 2)-60), 50, '')
     core.Draw.text((255, 255, 255), str(core.memory("total")),
                    ((core.WINDOW_SIZE[0] / 2) + 37, (core.WINDOW_SIZE[1] / 2) - 60), 50, '')
     # ---- retour page de démarrage --
@@ -413,7 +389,6 @@ def afficherGameOver():
 
     # ------ Texte + bouton retour sur la page de démarrage ----
     core.Draw.text((255, 255, 255), "RETOUR", ((core.WINDOW_SIZE[0] / 2) - 80, (core.WINDOW_SIZE[1] / 2)), 50)
-    # core.Draw.rect((255, 255, 255), ((core.WINDOW_SIZE[0] / 2)-83, (core.WINDOW_SIZE[1] / 2)+5, 180, 50), 5)
     Pos_SourisPlay = pygame.mouse.get_pos()
     recPlay = Rect((core.WINDOW_SIZE[0] / 2) - 83, (core.WINDOW_SIZE[1] / 2) + 5, 180, 50)
 
@@ -454,17 +429,16 @@ def afficherMenu():
     core.Draw.text((255, 255, 255), "JEU EN PAUSE", (420, core.WINDOW_SIZE[1] / 2 - 200), 80, 'Arial')
     core.Draw.text((255, 255, 255), "SCORE :", (535, core.WINDOW_SIZE[1] / 2 - 100), 50, 'Arial')
     core.Draw.text((255, 255, 255), str(core.memory("total")), (715, core.WINDOW_SIZE[1] / 2 - 100), 50, 'Arial')
-    # core.Draw.rect((255, 255, 255), ((core.WINDOW_SIZE[0] / 2) - 153, (core.WINDOW_SIZE[1] / 2) - 25, 305, 55), 5)
 
     # ---- texte + bouton reprise de jeu -----
     core.Draw.text((255, 255, 255), "CONTINUER", ((core.WINDOW_SIZE[0] / 2) - 150, (core.WINDOW_SIZE[1] / 2) - 20), 70,
-                   '')  # Arial #((core.WINDOW_SIZE[0] / 2) - 105, (core.WINDOW_SIZE[1] / 2) - 60), 105)
+                   '')
     Pos_SourisPlay = pygame.mouse.get_pos()
     recPlay = Rect((core.WINDOW_SIZE[0] / 2) - 153, (core.WINDOW_SIZE[1] / 2) - 25, 305, 55)
 
     if recPlay.collidepoint(Pos_SourisPlay):
         core.Draw.text((255, 255, 0), "CONTINUER", ((core.WINDOW_SIZE[0] / 2) - 150, (core.WINDOW_SIZE[1] / 2) - 20),
-                       70, '')  # Arial #((core.WINDOW_SIZE[0] / 2) - 105, (core.WINDOW_SIZE[1] / 2) - 60), 105)
+                       70, '')
 
         if core.getMouseLeftClick():
             Pos_SourisPlay = core.getMouseLeftClick()
@@ -475,8 +449,6 @@ def afficherMenu():
     # ----- texte + bouton abandon retour page de démarrage -----
     core.Draw.text((255, 255, 255), "ABANDONNER", ((core.WINDOW_SIZE[0] / 2) - 180, (core.WINDOW_SIZE[1] / 2) + 50), 70,
                    '')
-    # core.Draw.rect((255, 255, 255), ((core.WINDOW_SIZE[0] / 2) - 183, (core.WINDOW_SIZE[1] / 2) +45, 360, 55), 5)
-
     Pos_SourisLose = pygame.mouse.get_pos()
     recLose = Rect((core.WINDOW_SIZE[0] / 2) - 183, (core.WINDOW_SIZE[1] / 2) + 45, 360, 55)
 
