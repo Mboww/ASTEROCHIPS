@@ -51,7 +51,7 @@ class Ship:
         self.Pos += self.Vitesse
 
 
-        if self.Acc.length() < 1.5:
+        if self.Acc.length() < 1.75:
             self.Acc = Vector2(0, 0)
 
 

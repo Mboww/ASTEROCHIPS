@@ -59,10 +59,10 @@ def setup():
     policeotf = "./Asset/Doctor Glitch.otf"
     police = pygame.font.Font(policeotf)
 
-    musique = pygame.mixer.music.load("./Asset/Music.mp3")
-    volume = 0.02
-    pygame.mixer.music.set_volume(volume)
-    core.memory("Volume", volume)
+    #musique = pygame.mixer.music.load("./Asset/Music.mp3")
+    #volume = 0.02
+    #pygame.mixer.music.set_volume(volume)
+    #core.memory("Volume", volume)
 
     for i in range(0, 3):
         position_x = random.randint(0, core.WINDOW_SIZE[0])
@@ -72,7 +72,7 @@ def setup():
 
 def creationProjectile():
     proj = Projectile()
-    proj.position = Vector2(core.memory('Vaisseau').Pos) + 35 * core.memory('Vaisseau').orientation
+    proj.position = Vector2(core.memory('Vaisseau').Pos) + 40 * core.memory('Vaisseau').orientation
     proj.acceleration = Vector2(core.memory('Vaisseau').orientation)
     core.memory('mesProjectiles').append(proj)
 
@@ -168,7 +168,7 @@ def afficherDemarrage():
     Pos_SourisSon = pygame.mouse.get_pos()
     recSon = Rect((1210, (core.WINDOW_SIZE[1] / 2) + 290, 50, 50))
 
-    volume = core.memory("Volume")
+    #volume = core.memory("Volume")
 
     if not core.memory("SonOn").ready:
         core.memory("SonOn").load()
@@ -184,14 +184,14 @@ def afficherDemarrage():
             if recSon.collidepoint(Pos_SourisSon):
                 if core.memory("Son") == 0:
                     core.memory("Son", 1)
-                    pygame.mixer.music.play(-1)  # -1 = réptition infini
+                    #pygame.mixer.music.play(-1)  # -1 = réptition infini
 
 
                 elif core.memory("Son") == 1:
                     core.memory("Son", 0)
-                    pygame.mixer.music.stop()
+                    #pygame.mixer.music.stop()
 
-        core.memory("Volume", volume)
+        #core.memory("Volume", volume)
     if core.memory("Son") == 0:
         core.memory("SonOff").show()
 
@@ -241,7 +241,7 @@ def afficherJeu():
     # lancer projectiles
     if core.getKeyPressList("SPACE"):
         if len(core.memory('mesProjectiles')) > 0:
-            if time.time() - core.memory('mesProjectiles')[-1].startTime > 0.2:
+            if time.time() - core.memory('mesProjectiles')[-1].startTime > 0.25:
                 creationProjectile()
         else:
             creationProjectile()
